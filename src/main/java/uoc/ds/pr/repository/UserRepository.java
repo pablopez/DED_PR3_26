@@ -6,6 +6,7 @@ import uoc.ds.pr.exceptions.NoUserException;
 import uoc.ds.pr.exceptions.UserNotFoundException;
 import uoc.ds.pr.model.Assistance;
 import uoc.ds.pr.model.User;
+import uoc.ds.pr.model.Worker;
 import uoc.ds.pr.util.OrderedVector;
 
 import java.util.Comparator;
@@ -17,24 +18,7 @@ public class UserRepository extends AbstractRepository<User> {
    private final OrderedVector<User> topAssistedUsers;
 
     private static final Comparator<User> CMP_TOP_ASSISTANCES_USERS =
-            (u1, u2) -> {
-                int cmp = Integer.compare(
-                        u1.getAssistancesCount(),
-                        u2.getAssistancesCount()
-                );
-
-                if (cmp != 0) {
-                    return cmp;
-                }
-
-                int nameCmp = u2.getName().compareTo(u1.getName());
-
-                if (nameCmp != 0) {
-                    return nameCmp;
-                }
-
-                return u2.getId().compareTo(u1.getId());
-            };
+            Comparator.comparingInt(User::getAssistancesCount);
 
     public UserRepository() {
         super(new HashStorageStrategy<>());

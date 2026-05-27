@@ -21,18 +21,7 @@ public class WorkerRepository extends AbstractRepository<Worker> {
     private final OrderedVector<Worker> topWorkers;
 
     private static final Comparator<Worker> CMP_TOP_WORKERS =
-            (w1, w2) -> {
-                int cmp = Double.compare(
-                        w1.getGlobalRating(),
-                        w2.getGlobalRating()
-                );
-
-                if (cmp != 0) {
-                    return cmp;
-                }
-
-                return w2.getId().compareTo(w1.getId());
-            };
+            Comparator.comparingDouble(Worker::getGlobalRating);
 
     public WorkerRepository() {
         super(new HashStorageStrategy<>());
