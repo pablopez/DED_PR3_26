@@ -1,0 +1,36 @@
+assistanceId,userId,issueTypeId,roomId,date,description
+ASS01,U9,IT3,C4-336V,12-03-2026,Hardware failure - HDMI cable not working
+ASS02,U24,IT3,C4-237V,14-03-2026,Hardware failure - HDMI cable not working
+ASS03,U60,IT3,C4-338V,07-04-2026,Wi-Fi connectivity issues in the classroom
+ASS04,U41,IT3,C4-237V,30-04-2026,Wi-Fi connectivity issues in the classroom
+ASS05,U9,IT3,C4-026V,23-04-2026,Wi-Fi connectivity issues in the classroom
+ASS06,U52,IT3,C4-240V,08-05-2026,Hardware failure - HDMI cable not working
+ASS07,U32,IT3,C4-237V,27-04-2026,Wi-Fi connectivity issues in the classroom
+ASS08,U58,IT3,C4-338V,06-05-2026,Wi-Fi connectivity issues in the classroom
+ASS09,U20,IT3,C4-133V,03-04-2026,Wi-Fi connectivity issues in the classroom
+ASS10,U58,IT3,C4-023G,06-05-2026,Wi-Fi connectivity issues in the classroom
+ASS11,U26,IT3,C4-130G,06-05-2026,Hardware failure - HDMI cable not working
+ASS12,U14,IT3,C4-021B,14-04-2026,Wi-Fi connectivity issues in the classroom
+ASS13,U16,IT3,C4-130G,23-03-2026,Hardware failure - HDMI cable not working
+ASS14,U41,IT3,C4-237V,23-03-2026,Wi-Fi connectivity issues in the classroom
+ASS15,U64,IT3,C4-024G,06-04-2026,Wi-Fi connectivity issues in the classroom
+ASS16,U62,IT3,C4-131G,11-04-2026,Printer error - Paper jam in department printer
+ASS17,U35,IT3,C4-237V,02-05-2026,Security alert - Suspicious login attempt
+ASS18,U31,IT3,C4-236V,23-03-2026,Hardware failure - HDMI cable not working
+ASS19,U41,IT1,C4-026V,13-03-2026,Wi-Fi connectivity issues in the classroom
+ASS20,U23,IT5,C4-236V,03-04-2026,Telephony - VoIP phone disconnected
+ASS21,U36,IT6,C4-338V,21-03-2026,Update failed - System pending reboot
+ASS22,U23,IT4,C4-028-1,06-04-2026,Software application - Login error on virtual desktop
+ASS23,U24,IT6,C4-130G,17-03-2026,Update failed - System pending reboot
+ASS24,U55,IT7,C4-027-3,17-04-2026,Security alert - Suspicious login attempt
+ASS25,U54,IT7,C4-240V,24-03-2026,Security alert - Suspicious login attempt
+ASS26,U62,IT5,C4-131G,05-04-2026,Telephony - VoIP phone disconnected
+ASS27,U15,IT2,C4-023G,14-05-2026,Hardware failure - HDMI cable not working
+ASS28,U27,IT7,C4-326B,12-05-2026,Security alert - Suspicious login attempt
+ASS29,U37,IT6,C4-021B,20-04-2026,Update failed - System pending reboot
+ASS30,U55,IT8,C4-131G,07-05-2026,Other - General maintenance request
+ASS31,U25,IT2,C4-022B,24-03-2026,Hardware failure - HDMI cable not working
+ASS32,U9,IT3,C4-236V,13-04-2026,Printer error - Paper jam in department printer
+ASS33,U5,IT2,C4-021B,09-05-2026,Hardware failure - HDMI cable not working
+ASS34,U35,IT2,C4-023G,20-04-2026,Hardware failure - HDMI cable not working
+ASS35,U9,IT1,C4-339V,16-04-2026,Wi-Fi connectivity issues in the classroom

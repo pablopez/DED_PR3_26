@@ -1,0 +1,9 @@
+338d57d02965de563a1413f3049bbbfa927b69ace337f76d28b30e5748688d00  src/test/java/uoc/ds/pr/FactorySystemIssues.java
+e5e4182d3144cef7cad5ce9fb4ed0f7365d30517920dff275e32ed3c3385c520  src/test/java/uoc/ds/pr/SystemIssuesPR3PlusTest.java
+311758f8eefa0a16f3dd13e7a44cc059162f0e484eace50134cd5d649f48da65  src/test/java/uoc/ds/pr/util/RoundRobinTest.java
+57a59c301b3990eb4f8e73deeff70a4b9956f1641bab612792220eba4d306626  src/test/java/uoc/ds/pr/util/StackLinkedListTest.java
+3e0c052c824cad0e921d9fe1074489513e639e31f136c477b3037e9a53ad4623  src/test/java/uoc/ds/pr/util/CSVUtil.java
+27c057451c6de143b798937f73c0b290a5a0aa598105907eca90b87df1f310d6  src/test/java/uoc/ds/pr/util/DateUtils.java
+186006ab01bb1248f170a172fce4663c801afbf2610963945f08f7730d1f4203  src/test/java/uoc/ds/pr/ArchitectureTest.java
+a873e10909cfd6d30016b168a43c4f842da741b1d83b92d7f5dc7d6141f4f8eb  src/test/java/uoc/ds/pr/SystemIssuesPR2Test.java
+56970984b6f4a111c7be128d52b7da62deef2076c89660d586d94f36288c0059  src/test/java/uoc/ds/pr/SystemIssuesPR3Test.java

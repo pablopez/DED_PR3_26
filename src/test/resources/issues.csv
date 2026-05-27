@@ -1,0 +1,35 @@
+issueId,componentId,issueTypeId,description,dateTime
+ISS-001,COMP01,IT2,"System failure during OptiPlex boot sequence",2026-03-01T08:30:00
+ISS-002,COMP02,IT2,"EliteDisplay 24 flickering at high refresh rates",2026-03-01T09:15:00
+ISS-003,COMP03,IT2,"MK270 Keyboard connectivity issues with USB receiver",2026-03-01T10:45:00
+ISS-004,COMP04,IT2,"M185 Mouse sensor not responding on dark surfaces",2026-03-02T11:20:00
+ISS-005,COMP05,IT2,"Mac Studio overheating during 8K video rendering",2026-03-02T14:10:00
+ISS-006,COMP06,IT2,"ColorEdge 27 calibration error in professional mode",2026-03-03T09:05:00
+ISS-007,COMP07,IT2,"ThinkCentre M fan noise exceeding decibel limits",2026-03-03T13:45:00
+ISS-008,COMP08,IT2,"Zebra Label Printer paper jam in feeder tray",2026-03-04T08:50:00
+ISS-009,COMP09,IT2,"Latitude Laptop battery draining faster than expected",2026-03-04T16:30:00
+ISS-010,COMP10,IT2,"LiDE 400 Scanner software compatibility error (Windows 11)",2026-03-05T10:00:00
+ISS-011,COMP11,IT2,"WorkForce Printer ink leakage in cyan cartridge",2026-03-05T15:20:00
+ISS-012,COMP12,IT2,"ProArt Station GPU driver crash under heavy load",2026-03-06T11:15:00
+ISS-013,COMP13,IT2,"Razer Keyboard ghosting effect on WASD keys",2026-03-06T14:40:00
+ISS-014,COMP14,IT2,"HP Pro Tower power supply unit making clicking sounds",2026-03-07T09:30:00
+ISS-015,COMP15,IT2,"Honeywell Barcode Scanner laser dimming over time",2026-03-07T12:00:00
+ISS-016,COMP16,IT3,"Fujitsu fi-7160 Scanner double-feed detection error",2026-03-08T10:50:00
+ISS-017,COMP17,IT3,"Brother Printer wireless configuration reset loop",2026-03-08T15:10:00
+ISS-018,COMP18,IT2,"Odyssey G9 Monitor dead pixels on the left curve",2026-03-09T08:45:00
+ISS-019,COMP19,IT1,"Cisco Secure Router firmware update failure",2026-03-09T17:00:00
+ISS-020,COMP20,IT2,"Elo Touchscreen Display ghost touches on top corner",2026-03-10T11:30:00
+ISS-021,COMP01,IT6,"Dell OptiPlex BIOS update corrupted the bootloader",2026-03-10T14:20:00
+ISS-022,COMP02,IT2,"HP Monitor backlight bleed in dark environments",2026-03-11T09:00:00
+ISS-023,COMP03,IT2,"Logitech MK270 missing keystrokes during fast typing",2026-03-11T13:15:00
+ISS-024,COMP05,IT2,"Apple Mac Studio SD card slot not recognizing media",2026-03-12T10:40:00
+ISS-025,COMP09,IT2,"Dell Latitude keyboard backlight not turning on",2026-03-12T16:50:00
+ISS-026,COMP15,IT8,"Honeywell Scanner failing to read QR codes",2026-03-13T08:20:00
+ISS-027,COMP18,IT2,"Samsung Odyssey screen flickering with G-Sync enabled",2026-03-13T14:00:00
+ISS-028,COMP07,IT2,"Lenovo ThinkCentre SSD read speed degradation",2026-03-14T11:10:00
+ISS-029,COMP11,IT3,"Epson WorkForce Wi-Fi Direct printing lag",2026-03-14T15:30:00
+ISS-030,COMP19,IT1,"Cisco Router packet loss under high network traffic",2026-03-15T09:45:00
+ISS-031,COMP06,IT2,"Eizo Monitor OSD menu locked and unresponsive",2026-03-15T12:10:00
+ISS-032,COMP12,IT2,"Asus ProArt motherboard coil whine during startup",2026-03-16T10:00:00
+ISS-033,COMP08,IT3,"Zebra Printer ribbon snapped during high-volume print",2026-03-16T16:25:00
+ISS-034,COMP16,IT3,"Fujitsu Scanner roller kit replacement required",2026-03-17T11:50:00

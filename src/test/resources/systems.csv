@@ -1,0 +1,11 @@
+systemId,description,location,userId
+SYS01,Standard Admin Desktop,Accounting Room 101 F1,U1
+SYS02,Graphic Design Workstation,Creative Studio 202 F2,U2
+SYS03,Reception Desk Unit,Main Lobby F1,U3
+SYS04,Financial Analysis Rig,Data Center A-1 F2,U4
+SYS05,Mobile Executive Kit,Operations Hub 201 F4,U5
+SYS06,Developer High-Power Station,Dev Lab B-1 F3,U6
+SYS07,Quality Control Terminal,Production Floor F1,U7
+SYS08,Scanning and Archiving Unit,Archive Room 105 F1,U8
+SYS09,Network Monitoring Hub,Security Room S1 F1,U9
+SYS10,HR Self-Service Kiosk,Human Resources F2,U10
