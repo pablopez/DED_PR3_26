@@ -54,4 +54,8 @@ public class User extends AbstractModel {
     public int getAssistancesCount() {
         return assistances.size();
     }
+
+    public int numAssistances() {
+        return assistances.size();
+    }
 }

@@ -2,6 +2,7 @@ package uoc.ds.pr.repository;
 
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.exceptions.AssistanceNotFoundException;
+import uoc.ds.pr.exceptions.NoAssistanceException;
 import uoc.ds.pr.exceptions.NoIssuesException;
 import uoc.ds.pr.exceptions.WorkerNotFoundException;
 import uoc.ds.pr.model.Assistance;
@@ -100,12 +101,12 @@ public class WorkerRepository extends AbstractRepository<Worker> {
         return issue;
     }
 
-    public Assistance solveAssistance(String workerId) throws WorkerNotFoundException, AssistanceNotFoundException {
+    public Assistance solveAssistance(String workerId) throws WorkerNotFoundException, NoAssistanceException {
         Worker worker = getWorkerOrThrow(workerId);
         Assistance assistance = worker.solveNextAssistance();
 
         if (assistance == null) {
-            throw new AssistanceNotFoundException();
+            throw new NoAssistanceException();
         }
 
         return assistance;

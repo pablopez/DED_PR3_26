@@ -94,7 +94,7 @@ public class SystemIssuesPR3Impl extends SystemIssuesPR2Impl implements SystemIs
     }
 
     @Override
-    public Assistance solveAssistance(String workerId) throws WorkerNotFoundException, AssistanceNotFoundException {
+    public Assistance solveAssistance(String workerId) throws WorkerNotFoundException, NoAssistanceException {
         return workerRepository.solveAssistance(workerId);
     }
 
