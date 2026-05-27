@@ -37,6 +37,10 @@ public class SystemIssuesPR3Impl extends SystemIssuesPR2Impl implements SystemIs
     public RatingRepository getRatingRepository() {
         return ratingRepository;
     }
+
+    public WorkerSocialNetworkRepository getWorkerSocialNetworkRepository(){
+        return workerSocialNetworkRepository;
+    }
     
     @Override
     public void addRoom(String roomId, String name) {
@@ -128,7 +132,7 @@ public class SystemIssuesPR3Impl extends SystemIssuesPR2Impl implements SystemIs
         if (issueType == null || issueType.numWorkers() == 0) {
             throw new NoWorkerException();
         }
-        return issueType.getWorkers().values();
+        return issueType.getWorkers();
     }
 
     @Override
@@ -152,26 +156,79 @@ public class SystemIssuesPR3Impl extends SystemIssuesPR2Impl implements SystemIs
 
     @Override
     public void addFollower(String workerID, String followerId) throws FollowerNotFoundException, WorkerNotFoundException {
+        Worker worker = workerRepository.getWorker(workerID);
 
+        if (worker == null) {
+            throw new WorkerNotFoundException();
+        }
+
+        Worker follower = workerRepository.getWorker(followerId);
+
+        if (follower == null) {
+            throw new FollowerNotFoundException();
+        }
+
+        workerSocialNetworkRepository.addFollower(worker, follower);
     }
 
     @Override
     public Iterator<Worker> getFollowers(String workerId) throws WorkerNotFoundException, NoFollowersException {
-        return null;
+        Worker worker = workerRepository.getWorkerOrThrow(workerId);
+
+        if (workerSocialNetworkRepository.numFollowers(worker) == 0) {
+            throw new NoFollowersException();
+        }
+
+        return workerSocialNetworkRepository.getFollowers(worker);
     }
 
     @Override
     public Iterator<Worker> getFollowings(String followerId) throws WorkerNotFoundException, NoFollowedException {
-        return null;
+        Worker worker = workerRepository.getWorkerOrThrow(followerId);
+
+        if (workerSocialNetworkRepository.numFollowings(worker) == 0) {
+            throw new NoFollowedException();
+        }
+
+        return workerSocialNetworkRepository.getFollowings(worker);
     }
 
     @Override
     public Iterator<Worker> recommendations(String followerId) throws WorkerNotFoundException, NoFollowedException {
-        return null;
+        Worker worker = workerRepository.getWorkerOrThrow(followerId);
+
+        Iterator<Worker> recommendations =
+                workerSocialNetworkRepository.recommendations(worker);
+
+        if (!recommendations.hasNext()) {
+            throw new NoFollowedException();
+        }
+
+        return recommendations;
     }
 
     @Override
     public Iterator<Worker> getUnfollowedWorkersWithAssignedIssueType(String workerId, String issueTyoeID) throws WorkerNotFoundException, NoWorkerException {
-        return null;
+        Worker worker = workerRepository.getWorkerOrThrow(workerId);
+
+        IssueType issueType = issueTypeRepository.getIssueType(issueTyoeID);
+
+        if (issueType == null) {
+            throw new NoWorkerException();
+        }
+
+        Iterator<Worker> workersByIssueType = issueType.getWorkers();
+
+        Iterator<Worker> result =
+                workerSocialNetworkRepository.getUnfollowedWorkersWithAssignedIssueType(
+                        worker,
+                        workersByIssueType
+                );
+
+        if (!result.hasNext()) {
+            throw new NoWorkerException();
+        }
+
+        return result;
     }
 }

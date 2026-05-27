@@ -1,9 +1,6 @@
 package uoc.ds.pr.pr3;
 
-import uoc.ds.pr.model.Assistance;
-import uoc.ds.pr.model.IssueType;
-import uoc.ds.pr.model.Room;
-import uoc.ds.pr.model.User;
+import uoc.ds.pr.model.*;
 import uoc.ds.pr.repository.*;
 
 public class SystemIssuesHelperPR3Impl implements SystemIssuesHelperPR3 {
@@ -11,11 +8,15 @@ public class SystemIssuesHelperPR3Impl implements SystemIssuesHelperPR3 {
     private final UserRepository userRepository;
     private final AssistanceRepository assistanceRepository;
     private final IssueTypeRepository issueTypeRepository;
+    private final WorkerRepository workerRepository;
+    private final WorkerSocialNetworkRepository workerSocialNetworkRepository;
     public SystemIssuesHelperPR3Impl(SystemIssuesPR3Impl systemIssues) {
         this.roomRepository = systemIssues.getRoomRepository();
         this.userRepository = systemIssues.getUserRepository();
         this.assistanceRepository = systemIssues.getAssistanceRepository();
         this.issueTypeRepository = systemIssues.getIssueTypeRepository();
+        this.workerRepository = systemIssues.getWorkerRepository();
+        this.workerSocialNetworkRepository = systemIssues.getWorkerSocialNetworkRepository();
     }
 
     @Override
@@ -68,7 +69,7 @@ public class SystemIssuesHelperPR3Impl implements SystemIssuesHelperPR3 {
         if (issueType == null) {
             return 0;
         }
-        return issueType.getWorkers().size();
+        return issueType.numWorkers();
     }
 
     @Override
@@ -78,13 +79,23 @@ public class SystemIssuesHelperPR3Impl implements SystemIssuesHelperPR3 {
 
     @Override
     public int numFollowers(String userId) {
-        // TODO: Implement when follower functionality is added
-        return 0;
+        Worker worker = workerRepository.getWorker(userId);
+
+        if (worker == null) {
+            return 0;
+        }
+
+        return workerSocialNetworkRepository.numFollowers(worker);
     }
 
     @Override
     public int numFollowings(String userId) {
-        // TODO: Implement when follower functionality is added
-        return 0;
+        Worker worker = workerRepository.getWorker(userId);
+
+        if (worker == null) {
+            return 0;
+        }
+
+        return workerSocialNetworkRepository.numFollowings(worker);
     }
 }

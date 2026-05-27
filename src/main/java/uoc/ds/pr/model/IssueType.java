@@ -1,6 +1,9 @@
 package uoc.ds.pr.model;
 
+import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.util.RoundRobinList;
+
+
 
 public class IssueType extends AbstractModel {
     private String name;
@@ -32,8 +35,8 @@ public class IssueType extends AbstractModel {
         return workers.size();
     }
 
-    public RoundRobinList<Worker> getWorkers() {
-        return workers;
+    public Iterator<Worker> getWorkers() {
+        return workers.values();
     }
 
     public Worker nextWorkerRoundRobin() {

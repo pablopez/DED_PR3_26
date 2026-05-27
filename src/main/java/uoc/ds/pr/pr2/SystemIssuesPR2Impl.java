@@ -16,7 +16,7 @@ public class SystemIssuesPR2Impl implements SystemIssues {
     protected ComponentRepository componentRepository;
     protected IssueRepository issueRepository;
     protected IssueTypeRepository issueTypeRepository;
-
+    protected WorkerSocialNetworkRepository workerSocialNetworkRepository;
 
     public SystemIssuesPR2Impl() {
         workerRepository = new WorkerRepository();
@@ -25,6 +25,7 @@ public class SystemIssuesPR2Impl implements SystemIssues {
         componentRepository = new ComponentRepository();
         issueRepository = new IssueRepository();
         issueTypeRepository = new IssueTypeRepository();
+        workerSocialNetworkRepository = new WorkerSocialNetworkRepository();
     }
 
     public WorkerRepository getWorkerRepository() {
@@ -51,7 +52,8 @@ public class SystemIssuesPR2Impl implements SystemIssues {
 
     @Override
     public void addWorker(String workerId, String name, String address) {
-        workerRepository.addWorker(workerId, name, address);
+        Worker w = workerRepository.addWorker(workerId, name, address);
+        workerSocialNetworkRepository.addWorker(w);
     }
 
     @Override
