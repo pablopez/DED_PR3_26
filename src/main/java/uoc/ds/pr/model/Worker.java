@@ -110,7 +110,11 @@ public class Worker extends AbstractModel {
     }
 
     public void setIssueType(IssueType issueType) {
+        if(this.issueType != null){
+            this.issueType.removeWorker(this);
+        }
         this.issueType = issueType;
+        issueType.addWorker(this);
     }
 
     public void addRate(Rating rating) {

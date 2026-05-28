@@ -1,6 +1,7 @@
 package uoc.ds.pr.model;
 
 import edu.uoc.ds.traversal.Iterator;
+import uoc.ds.pr.exceptions.NoWorkerException;
 import uoc.ds.pr.util.RoundRobinList;
 
 
@@ -35,7 +36,8 @@ public class IssueType extends AbstractModel {
         return workers.size();
     }
 
-    public Iterator<Worker> getWorkers() {
+    public Iterator<Worker> getWorkers() throws NoWorkerException {
+        if(numWorkers() == 0)  throw new NoWorkerException();
         return workers.values();
     }
 

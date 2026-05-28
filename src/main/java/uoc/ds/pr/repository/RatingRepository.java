@@ -43,7 +43,6 @@ public class RatingRepository extends AbstractRepository<Rating> {
                    treatmentScore
            );
         }
-
         return rating;
     }
 

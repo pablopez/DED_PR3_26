@@ -1,7 +1,7 @@
 package uoc.ds.pr.model;
 
 public abstract class AbstractModel implements Identifiable, Comparable<AbstractModel> {
-    protected String id;
+    protected final String id;
 
     public AbstractModel(String id) {
         this.id = id;

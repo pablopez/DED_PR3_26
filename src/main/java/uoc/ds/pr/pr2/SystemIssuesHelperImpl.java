@@ -5,7 +5,7 @@ import uoc.ds.pr.model.System;
 import uoc.ds.pr.model.Worker;
 
 public class SystemIssuesHelperImpl implements SystemIssuesHelper {
-    private SystemIssuesPR2Impl systemIssues;
+    private final SystemIssuesPR2Impl systemIssues;
 
     public SystemIssuesHelperImpl(SystemIssuesPR2Impl computerProjects) {
         this.systemIssues = computerProjects;

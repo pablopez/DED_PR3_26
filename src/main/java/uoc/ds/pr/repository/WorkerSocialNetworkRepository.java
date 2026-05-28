@@ -1,9 +1,12 @@
 package uoc.ds.pr.repository;
+
 import edu.uoc.ds.adt.nonlinear.graphs.DirectedEdge;
 import edu.uoc.ds.adt.nonlinear.graphs.DirectedGraphImpl;
 import edu.uoc.ds.adt.nonlinear.graphs.Edge;
 import edu.uoc.ds.adt.nonlinear.graphs.Vertex;
 import edu.uoc.ds.traversal.Iterator;
+import uoc.ds.pr.exceptions.NoFollowedException;
+import uoc.ds.pr.exceptions.NoWorkerException;
 import uoc.ds.pr.model.Worker;
 import uoc.ds.pr.util.DSLinkedList;
 
@@ -71,14 +74,26 @@ public class WorkerSocialNetworkRepository {
     }
 
     public int numFollowers(Worker worker) {
-        return count(getFollowers(worker));
+        Vertex<Worker> vertex = graph.getVertex(worker);
+
+        if (vertex == null) {
+            return 0;
+        }
+
+        return countEdges(graph.edgedWithDestination(vertex));
     }
 
     public int numFollowings(Worker worker) {
-        return count(getFollowings(worker));
+        Vertex<Worker> vertex = graph.getVertex(worker);
+
+        if (vertex == null) {
+            return 0;
+        }
+
+        return countEdges(graph.edgesWithSource(vertex));
     }
 
-    public Iterator<Worker> recommendations(Worker worker) {
+    public Iterator<Worker> getRecommendations(Worker worker) {
         DSLinkedList<Worker> result = new DSLinkedList<>();
 
         Iterator<Worker> directFollowers = getFollowers(worker);
@@ -158,11 +173,11 @@ public class WorkerSocialNetworkRepository {
         };
     }
 
-    private int count(Iterator<Worker> iterator) {
+    private int countEdges(Iterator<Edge<String, Worker>> edges) {
         int count = 0;
 
-        while (iterator.hasNext()) {
-            iterator.next();
+        while (edges.hasNext()) {
+            edges.next();
             count++;
         }
 
@@ -182,5 +197,42 @@ public class WorkerSocialNetworkRepository {
                 return null;
             }
         };
+    }
+
+    public Iterator<Worker> getFollowingsOrThrow(Worker worker)
+            throws NoFollowedException {
+
+        if (numFollowings(worker) == 0) {
+            throw new NoFollowedException();
+        }
+
+        return getFollowings(worker);
+    }
+
+    public Iterator<Worker> getRecommendationsOrThrow(Worker worker)
+            throws NoFollowedException {
+
+        Iterator<Worker> recommendations = getRecommendations(worker);
+
+        if (!recommendations.hasNext()) {
+            throw new NoFollowedException();
+        }
+
+        return recommendations;
+    }
+
+    public Iterator<Worker> getUnfollowedWorkersWithAssignedIssueTypeOrThrow(
+            Worker worker,
+            Iterator<Worker> workersByIssueType
+    ) throws NoWorkerException {
+
+        Iterator<Worker> result =
+                getUnfollowedWorkersWithAssignedIssueType(worker, workersByIssueType);
+
+        if (!result.hasNext()) {
+            throw new NoWorkerException();
+        }
+
+        return result;
     }
 }

@@ -60,10 +60,7 @@ public class SystemIssuesPR3Impl extends SystemIssuesPR2Impl implements SystemIs
     @Override
     public void assignSystemToRoom(String systemId, String roomId) throws RoomNotFoundException, SystemNotFoundException {
         Room room = roomRepository.getRoomOrThrow(roomId);
-        System system = systemRepository.getSystem(systemId);
-        if (system == null) {
-            throw new SystemNotFoundException();
-        }
+        System system = systemRepository.getSystemOrThrow(systemId);
         system.setRoom(room);
     }
 
@@ -71,16 +68,7 @@ public class SystemIssuesPR3Impl extends SystemIssuesPR2Impl implements SystemIs
     public void assignWorkerToIssueType(String workerId, String issueTypeId) throws IssueTypeNotFoundException, WorkerNotFoundException {
         Worker worker = workerRepository.getWorkerOrThrow(workerId);
         IssueType issueType = issueTypeRepository.getIssueTypeOrThrow(issueTypeId);
-        
-        // If worker already has an issue type, remove from that issue type's workers list
-        IssueType existingIssueType = worker.getIssueType();
-        if (existingIssueType != null) {
-            existingIssueType.removeWorker(worker);
-        }
-        
-        // Assign new issue type to worker and add to workers list
         worker.setIssueType(issueType);
-        issueType.addWorker(worker);
     }
 
     @Override
@@ -113,35 +101,21 @@ public class SystemIssuesPR3Impl extends SystemIssuesPR2Impl implements SystemIs
         if (!assistance.getUser().getId().equals(userId)) {
             throw new UserIsNotCreatorException();
         }
-        
-        // Create and store rating
         Rating rating = ratingRepository.addRating(ratingId, assistance, date, resolutionScore, speedScore, treatmentScore);
-        
-        // Set rating on assistance using the average from Rating
         assistance.setRating(rating);
-
         Worker worker = assistance.getWorker();
-
-        // Add rating to worker and update top workers
         workerRepository.rateWorker(worker, rating);
     }
 
     @Override
     public Iterator<Worker> getWorkersByIssueType(String issueTypeId) throws NoWorkerException {
         IssueType issueType = issueTypeRepository.getIssueType(issueTypeId);
-        if (issueType == null || issueType.numWorkers() == 0) {
-            throw new NoWorkerException();
-        }
         return issueType.getWorkers();
     }
 
     @Override
     public Iterator<Worker> getTop10BestWorkers() throws NoWorkerException {
-        if (workerRepository.numRatedWorkers() == 0) {
-            throw new NoWorkerException();
-        }
-
-        return workerRepository.getTopNWorkers(10);
+        return workerRepository.getTopNWorkers();
     }
 
     @Override
@@ -156,12 +130,7 @@ public class SystemIssuesPR3Impl extends SystemIssuesPR2Impl implements SystemIs
 
     @Override
     public void addFollower(String workerID, String followerId) throws FollowerNotFoundException, WorkerNotFoundException {
-        Worker worker = workerRepository.getWorker(workerID);
-
-        if (worker == null) {
-            throw new WorkerNotFoundException();
-        }
-
+        Worker worker = workerRepository.getWorkerOrThrow(workerID);
         Worker follower = workerRepository.getWorker(followerId);
 
         if (follower == null) {
@@ -185,50 +154,25 @@ public class SystemIssuesPR3Impl extends SystemIssuesPR2Impl implements SystemIs
     @Override
     public Iterator<Worker> getFollowings(String followerId) throws WorkerNotFoundException, NoFollowedException {
         Worker worker = workerRepository.getWorkerOrThrow(followerId);
-
-        if (workerSocialNetworkRepository.numFollowings(worker) == 0) {
-            throw new NoFollowedException();
-        }
-
-        return workerSocialNetworkRepository.getFollowings(worker);
+        return workerSocialNetworkRepository.getFollowingsOrThrow(worker);
     }
 
     @Override
     public Iterator<Worker> recommendations(String followerId) throws WorkerNotFoundException, NoFollowedException {
         Worker worker = workerRepository.getWorkerOrThrow(followerId);
-
-        Iterator<Worker> recommendations =
-                workerSocialNetworkRepository.recommendations(worker);
-
-        if (!recommendations.hasNext()) {
-            throw new NoFollowedException();
-        }
-
-        return recommendations;
+        return workerSocialNetworkRepository.getRecommendationsOrThrow(worker);
     }
 
     @Override
     public Iterator<Worker> getUnfollowedWorkersWithAssignedIssueType(String workerId, String issueTyoeID) throws WorkerNotFoundException, NoWorkerException {
         Worker worker = workerRepository.getWorkerOrThrow(workerId);
-
         IssueType issueType = issueTypeRepository.getIssueType(issueTyoeID);
-
-        if (issueType == null) {
-            throw new NoWorkerException();
-        }
-
         Iterator<Worker> workersByIssueType = issueType.getWorkers();
 
-        Iterator<Worker> result =
+        return
                 workerSocialNetworkRepository.getUnfollowedWorkersWithAssignedIssueType(
                         worker,
                         workersByIssueType
                 );
-
-        if (!result.hasNext()) {
-            throw new NoWorkerException();
-        }
-
-        return result;
     }
 }
