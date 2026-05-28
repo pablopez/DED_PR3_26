@@ -72,21 +72,14 @@ public class SystemIssuesPR2Impl implements SystemIssues {
     @Override
     public void installComponentToSystem(String componentId, String systemId) throws ComponentAlreadyInstalledException {
         Component component = componentRepository.getComponent(componentId);
-        System system = systemRepository.getSystem(systemId);
-        if (systemRepository.isInstalled(system, component)) {
-            throw new ComponentAlreadyInstalledException();
-        }
-        systemRepository.addComponent(system, component);
-
-        systemRepository.updateSystemWithMostComponents(system);
+        systemRepository.addComponent(systemId, component);
     }
 
     @Override
     public Issue createIssue(String issueId, String componentId, String issueTypeId, String description, LocalDateTime dateTime) throws ComponentNotFoundException {
         Component component = componentRepository.getComponentOrThrow(componentId);
         IssueType issueType = issueTypeRepository.getIssueType(issueTypeId);
-        Issue issue = issueRepository.addIssue(issueId, component, issueType, description, dateTime);
-        return issue;
+        return issueRepository.addIssue(issueId, component, issueType, description, dateTime);
     }
 
     @Override
@@ -94,15 +87,7 @@ public class SystemIssuesPR2Impl implements SystemIssues {
         IssueAlreadyAssignedException, IssueAlreadyResolvedException {
         Issue issue = issueRepository.getIssueOrThrow(issueId);
         Worker worker = workerRepository.getWorkerOrThrow(workerId);
-        if (issue.isAssigned()) {
-            throw new IssueAlreadyAssignedException();
-        }
-
-        if (issue.isResolved()) {
-            throw new IssueAlreadyResolvedException();
-        }
         issueRepository.assignIssue(issue, worker);
-
     }
 
     @Override
@@ -112,22 +97,12 @@ public class SystemIssuesPR2Impl implements SystemIssues {
 
     @Override
     public Iterator<System> getSystems() throws NoSystemsException {
-        Iterator<System> it =  systemRepository.systems();
-        if (!it.hasNext()) {
-            throw new NoSystemsException();
-        }
-        return it;
+        return  systemRepository.getSystems();
     }
 
     @Override
     public Iterator<Component> getComponentsBySystem(String systemId) throws SystemHasNoComponentsException {
-        System system = systemRepository.getSystem(systemId);
-        Iterator<Component> it = system.components();
-        if  (!it.hasNext()) {
-            throw new SystemHasNoComponentsException();
-        }
-
-        return it;
+        return systemRepository.getComponentsBySystem(systemId);
     }
 
     @Override
@@ -137,20 +112,12 @@ public class SystemIssuesPR2Impl implements SystemIssues {
 
     @Override
     public Worker getTopWorker() throws NoWorkerException {
-        Worker worker = workerRepository.getTopWorker();
-        if  (worker==null) {
-            throw new NoWorkerException();
-        }
-        return worker;
+        return workerRepository.getTopWorker();
     }
 
     @Override
     public System  getSystemWithMostComponents() throws NoSystemsException {
-        System system = systemRepository.getSystemWithMostComponents();
-        if  (system==null) {
-            throw new NoSystemsException();
-        }
-        return system;
+        return systemRepository.getSystemWithMostComponents();
     }
 
     @Override

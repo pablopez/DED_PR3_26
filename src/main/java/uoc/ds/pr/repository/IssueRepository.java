@@ -1,5 +1,7 @@
 package uoc.ds.pr.repository;
 
+import uoc.ds.pr.exceptions.IssueAlreadyAssignedException;
+import uoc.ds.pr.exceptions.IssueAlreadyResolvedException;
 import uoc.ds.pr.exceptions.IssueNotFoundException;
 import uoc.ds.pr.model.Component;
 import uoc.ds.pr.model.Issue;
@@ -57,7 +59,14 @@ public class IssueRepository extends AbstractRepository<Issue> {
         return size();
     }
 
-    public void assignIssue(Issue issue, Worker worker) {
+    public void assignIssue(Issue issue, Worker worker) throws IssueAlreadyAssignedException, IssueAlreadyResolvedException {
+        if (issue.isAssigned()) {
+            throw new IssueAlreadyAssignedException();
+        }
+
+        if (issue.isResolved()) {
+            throw new IssueAlreadyResolvedException();
+        }
         issue.setWorker(worker);
         worker.addIssue(issue);
     }

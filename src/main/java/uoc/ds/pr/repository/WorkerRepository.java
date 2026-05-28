@@ -1,10 +1,7 @@
 package uoc.ds.pr.repository;
 
 import edu.uoc.ds.traversal.Iterator;
-import uoc.ds.pr.exceptions.AssistanceNotFoundException;
-import uoc.ds.pr.exceptions.NoAssistanceException;
-import uoc.ds.pr.exceptions.NoIssuesException;
-import uoc.ds.pr.exceptions.WorkerNotFoundException;
+import uoc.ds.pr.exceptions.*;
 import uoc.ds.pr.model.Assistance;
 import uoc.ds.pr.model.Issue;
 import uoc.ds.pr.model.Rating;
@@ -62,7 +59,8 @@ public class WorkerRepository extends AbstractRepository<Worker> {
         }
     }
 
-    public Worker getTopWorker() {
+    public Worker getTopWorker() throws NoWorkerException {
+        if(topWorker == null) throw new NoWorkerException();
         return topWorker;
     }
 

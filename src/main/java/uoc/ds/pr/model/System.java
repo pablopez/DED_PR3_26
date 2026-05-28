@@ -45,6 +45,10 @@ public class System extends AbstractModel {
         components.put(component.getId(), component);
     }
 
+    public void removeComponent(Component component) {
+        components.remove(component.getId());
+        component.setSystem(null);
+    }
     public DSLinkedList<Component> getComponents() {
         return components;
     }
