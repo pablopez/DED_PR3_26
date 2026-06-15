@@ -2,6 +2,7 @@ package uoc.ds.pr.model;
 
 import uoc.ds.pr.Role;
 import java.time.LocalDate;
+import java.util.Comparator;
 
 public class Assistance extends AbstractModel {
     private User user;
@@ -75,6 +76,7 @@ public class Assistance extends AbstractModel {
 
     public void setResolved(boolean resolved) { this.resolved = resolved; }
 
+    @SuppressWarnings("unused")
     public Rating getRating() {
         return rating;
     }
@@ -83,11 +85,15 @@ public class Assistance extends AbstractModel {
         this.rating = rating;
     }
 
-    public boolean isRated() {
-        return this.getRating()  != null;
-    }
-
     public Role getRole() {
         return this.user.getRole();
     }
+
+    public static final Comparator<Assistance> PriorityCMP = Comparator
+            // 1. Mayor rango sale antes (reversed porque por defecto es ascendente)
+            .comparingInt((Assistance a) -> a.getUser().getRole().getRank()).reversed()
+            // 2. Si empatan, ordenamos por fecha más antigua (ascendente)
+            .thenComparing(Assistance::getDate)
+            // 3. Si empatan en fecha, ordenamos por ID (ascendente)
+            .thenComparing(Assistance::getId);
 }

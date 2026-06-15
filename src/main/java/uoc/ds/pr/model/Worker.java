@@ -1,9 +1,9 @@
 package uoc.ds.pr.model;
 
 import edu.uoc.ds.adt.nonlinear.DictionaryAVLImpl;
+import edu.uoc.ds.adt.nonlinear.PriorityQueue;
 import edu.uoc.ds.adt.sequential.Stack;
 import edu.uoc.ds.traversal.Iterator;
-import uoc.ds.pr.util.AssignedAssistanceQueue;
 import uoc.ds.pr.util.DSLinkedList;
 import uoc.ds.pr.util.StackLinkedList;
 
@@ -14,7 +14,7 @@ public class Worker extends AbstractModel {
     private final Stack<Issue> issues;
     private IssueType issueType;
     private int solvedIssuesCont;
-    private final AssignedAssistanceQueue assignedAssistances;
+    private final PriorityQueue<Assistance> assignedAssistances;
     private double ratingsSum;
     private final DictionaryAVLImpl<Integer, Issue> solvedIssues;
     private final DictionaryAVLImpl<String, Assistance> solvedAssistances;
@@ -27,12 +27,10 @@ public class Worker extends AbstractModel {
         issues = new StackLinkedList<>();
         solvedIssues = new DictionaryAVLImpl<>();
         solvedAssistances = new DictionaryAVLImpl<>();
-        assignedAssistances = new AssignedAssistanceQueue();
+        assignedAssistances = new PriorityQueue<>(Assistance.PriorityCMP);
         rates = new DSLinkedList<>();
         ratingsSum = 0.0;
         solvedIssuesCont = 0;
-
-
     }
 
     public void update(String name, String address) {
