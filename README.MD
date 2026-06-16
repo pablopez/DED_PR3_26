@@ -98,7 +98,7 @@ Se debe de usar exclusivamente estructuras de DSLib(`DSLib-2.1-7.jar`)
 
 ---
 
-## 🧬 3. Estructuras de Datos y Justificación
+## 💾 3. Estructuras de Datos y Justificación
 
 | Entidad / Relación | Estructura Utilizada | Justificación de Diseño                                                                                     |
 |-------------------|----------------------|-------------------------------------------------------------------------------------------------------------|
