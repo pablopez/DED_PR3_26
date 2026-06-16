@@ -16,7 +16,7 @@ Este proyecto nace como respuesta a la necesidad de una compañía tecnológica 
 Se mejora la estructura del sistema inicial para soportar mayor cantidad de información. Se amplía la usabilidad del sistema inicial añadiendo nuevas entidades (salas físicas, usuarios jerarquizados, asistencias y valoración de asistencias) y características (red social entre trabajadores).
 
 **Expansión y Escalabilidad (PR3 / PEC2):**
-Se amplía el sistema para soportar mayor cantidad de información. Se añaden salas, roles jerárquicos de usuarios y tipificación de incidencias. Además, se introducen asistencias gestionadas mediante colas de prioridad, un sistema de control de calidad (Ratings) y una red social corporativa para los técnicos implementada a través de grafos dirigidosstricta donde los técnicos resuelven las tareas en orden inverso de llegada (LIFO).
+Se amplía el sistema para soportar mayor cantidad de información. Se añaden salas, roles jerárquicos de usuarios y tipificación de incidencias. Además, se introducen asistencias gestionadas mediante colas de prioridad, un sistema de control de calidad (Ratings) y una red social corporativa para los técnicos implementada a través de grafos dirigidos.
 
 ---
 
