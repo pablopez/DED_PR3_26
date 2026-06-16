@@ -75,7 +75,7 @@ public class SystemIssuesPR2Impl implements SystemIssues {
 
     @Override
     public Worker getTopWorker() throws NoWorkerException {
-        return this.services.issues().getTopWorker();
+        return this.services.rankings().getTopWorker();
     }
 
     @Override

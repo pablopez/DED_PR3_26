@@ -7,6 +7,7 @@ import uoc.ds.pr.model.Component;
 import uoc.ds.pr.model.Issue;
 import uoc.ds.pr.model.IssueType;
 import uoc.ds.pr.model.Worker;
+import uoc.ds.pr.storage.AVLStorageStrategy;
 
 import java.time.LocalDateTime;
 
@@ -36,18 +37,14 @@ public class IssueRepository extends AbstractRepository<Issue> {
 
             save(issue);
             component.addIssue(issue);
-        } else {
-            /*
+        } /*else {
+
                habría que devolver un error en caso de que se intentara duplicar un issue? o editarlo?
                dejo este bloque pendiente para ver qué hacer y devolviendo issue tal cual
-            */
-        }
+
+        }*/
 
         return issue;
-    }
-
-    public Issue getIssue(String id) {
-        return getById(id);
     }
 
     public Issue getIssueOrThrow(String id)

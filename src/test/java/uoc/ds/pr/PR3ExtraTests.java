@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 import static org.junit.Assert.assertThrows;
 
-public class ExtraTestsPR3 {
+public class PR3ExtraTests {
 
     @Test
     public void pr3ShouldShareStateWithInheritedPR2Methods() throws Exception {
@@ -44,17 +44,15 @@ public class ExtraTestsPR3 {
     public void rateUnknownAssistanceShouldThrowAssistanceNotResolved() {
         SystemIssuesPR3 pr = new SystemIssuesPR3Impl();
 
-        assertThrows(AssistanceNotResolvedException.class, () -> {
-            pr.rateAssistance(
-                    "R1",
-                    "U1",
-                    "UNKNOWN",
-                    LocalDate.now(),
-                    10,
-                    10,
-                    10
-            );
-        });
+        assertThrows(AssistanceNotResolvedException.class, () -> pr.rateAssistance(
+                "R1",
+                "U1",
+                "UNKNOWN",
+                LocalDate.now(),
+                10,
+                10,
+                10
+        ));
     }
 
     @Test
@@ -99,26 +97,51 @@ public class ExtraTestsPR3 {
     }
 
     @Test
-    public void solveAssistanceMustRespectPriority() throws Exception {
+    public void solveAssistanceMustRespectFullPriorityComparator() throws Exception {
         SystemIssuesPR3 pr = new SystemIssuesPR3Impl();
 
         pr.addWorker("W1", "Worker 1", "A");
-        pr.addIssueType("IT1", "Printer23412");
+        pr.addIssueType("IT1", "Hardware");
         pr.assignWorkerToIssueType("W1", "IT1");
-
         pr.addRoom("R1", "Room 1");
 
-        pr.addUser("U1", "Analyst", Role.ANALYST, "111");
-        pr.addUser("U2", "Director", Role.DIRECTOR, "222");
+        pr.addUser("U1", "Director", Role.DIRECTOR, "1");      // Rango 5
+        pr.addUser("U2", "Manager", Role.MANAGER, "2");        // Rango 2
+        pr.addUser("U3", "Analyst", Role.ANALYST, "3");        // Rango 1
 
-        pr.addAssistance("A1", "U1", "IT1", "R1", LocalDate.of(2024, 1, 1), "Low priority");
-        pr.addAssistance("A2", "U2", "IT1", "R1", LocalDate.of(2024, 1, 2), "High priority");
+        // Desempate por rol
+        pr.addAssistance("A1", "U1", "IT1", "R1", LocalDate.of(2026, 1, 2), "A1");
 
+        // Desempate por fecha
+        pr.addAssistance("A3", "U2", "IT1", "R1", LocalDate.of(2026, 1, 2), "A3");
+        pr.addAssistance("A2", "U2", "IT1", "R1", LocalDate.of(2026, 1, 1), "A2");
+
+        // Desempate por ID
+        pr.addAssistance("A5", "U3", "IT1", "R1", LocalDate.of(2026, 1, 3), "A5");
+        pr.addAssistance("A4", "U3", "IT1", "R1", LocalDate.of(2026, 1, 3), "A4");
+
+        pr.assignAssistance("A5");
+        pr.assignAssistance("A3");
         pr.assignAssistance("A1");
+        pr.assignAssistance("A4");
         pr.assignAssistance("A2");
 
-        Assistance solved = pr.solveAssistance("W1");
+        Assistance solved;
 
+        // Debe  salir A1 porque gana por rol
+        solved = pr.solveAssistance("W1");
+        Assert.assertEquals("A1", solved.getId());
+
+        // Debe salir A2 porque gana por fecha
+        solved = pr.solveAssistance("W1");
         Assert.assertEquals("A2", solved.getId());
+
+        // Debe salir A3 porque gana por fecha
+        solved = pr.solveAssistance("W1");
+        Assert.assertEquals("A3", solved.getId());
+
+        // Debe desempatar la ID A4 va antes que A5
+        solved = pr.solveAssistance("W1");
+        Assert.assertEquals("A4", solved.getId());
     }
 }

@@ -1,16 +1,16 @@
-package uoc.ds.pr.repository;
+package uoc.ds.pr.storage;
 
-import edu.uoc.ds.adt.nonlinear.DictionaryAVLImpl;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.model.AbstractModel;
+import uoc.ds.pr.util.DSListArray;
 
-public class AVLStorageStrategy<T extends AbstractModel>
+public class VectorStorageStrategy<T extends AbstractModel>
         implements StorageStrategy<T> {
 
-    private final DictionaryAVLImpl<String, T> data;
+    private final DSListArray<T> data;
 
-    public AVLStorageStrategy() {
-        this.data = new DictionaryAVLImpl<>();
+    public VectorStorageStrategy(int max) {
+        this.data = new DSListArray<>(max);
     }
 
     @Override
@@ -25,12 +25,12 @@ public class AVLStorageStrategy<T extends AbstractModel>
 
     @Override
     public void remove(String id) {
-        data.delete(id);
+        data.remove(id);
     }
 
     @Override
     public boolean contains(String id) {
-        return data.containsKey(id);
+        return data.get(id) != null;
     }
 
     @Override

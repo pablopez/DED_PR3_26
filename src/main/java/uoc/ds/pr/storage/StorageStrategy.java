@@ -1,4 +1,4 @@
-package uoc.ds.pr.repository;
+package uoc.ds.pr.storage;
 
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.model.AbstractModel;

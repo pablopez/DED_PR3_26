@@ -2,6 +2,7 @@ package uoc.ds.pr.repository;
 
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.model.AbstractModel;
+import uoc.ds.pr.storage.StorageStrategy;
 
 import java.util.function.Function;
 import java.util.function.Supplier;

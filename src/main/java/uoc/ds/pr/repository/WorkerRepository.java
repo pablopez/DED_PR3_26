@@ -2,10 +2,10 @@ package uoc.ds.pr.repository;
 
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.exceptions.*;
-import uoc.ds.pr.model.Assistance;
 import uoc.ds.pr.model.Issue;
 import uoc.ds.pr.model.Rating;
 import uoc.ds.pr.model.Worker;
+import uoc.ds.pr.storage.HashStorageStrategy;
 import uoc.ds.pr.util.OrderedVector;
 
 import java.util.Comparator;
@@ -86,17 +86,6 @@ public class WorkerRepository extends AbstractRepository<Worker> {
         Issue issue = w.solveNextIssue();
         updateTopWorker(w);
         return issue;
-    }
-
-    public Assistance solveAssistance(String workerId) throws WorkerNotFoundException, NoAssistanceException {
-        Worker worker = getWorkerOrThrow(workerId);
-        Assistance assistance = worker.solveNextAssistance();
-
-        if (assistance == null) {
-            throw new NoAssistanceException();
-        }
-
-        return assistance;
     }
 
     public Iterator<Issue> doneIssues(String workerId) throws NoIssuesException {

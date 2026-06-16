@@ -2,6 +2,7 @@ package uoc.ds.pr.repository;
 
 import uoc.ds.pr.exceptions.ComponentNotFoundException;
 import uoc.ds.pr.model.Component;
+import uoc.ds.pr.storage.AVLStorageStrategy;
 
 public class ComponentRepository extends AbstractRepository<Component> {
 

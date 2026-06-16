@@ -1,16 +1,15 @@
-package uoc.ds.pr.repository;
+package uoc.ds.pr.storage;
 
+import edu.uoc.ds.adt.nonlinear.HashTable;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.model.AbstractModel;
-import uoc.ds.pr.util.DSListArray;
 
-public class VectorStorageStrategy<T extends AbstractModel>
-        implements StorageStrategy<T> {
+public class HashStorageStrategy<T extends AbstractModel> implements StorageStrategy<T> {
 
-    private final DSListArray<T> data;
+    private final HashTable<String,T> data;
 
-    public VectorStorageStrategy(int max) {
-        this.data = new DSListArray<>(max);
+    public HashStorageStrategy() {
+        this.data = new HashTable<>();
     }
 
     @Override
@@ -25,12 +24,12 @@ public class VectorStorageStrategy<T extends AbstractModel>
 
     @Override
     public void remove(String id) {
-        data.remove(id);
+        data.delete(id);
     }
 
     @Override
     public boolean contains(String id) {
-        return data.get(id) != null;
+        return data.containsKey(id);
     }
 
     @Override

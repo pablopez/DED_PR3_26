@@ -5,10 +5,8 @@ import uoc.ds.pr.exceptions.IssueAlreadyAssignedException;
 import uoc.ds.pr.exceptions.IssueAlreadyResolvedException;
 import uoc.ds.pr.exceptions.IssueNotFoundException;
 import uoc.ds.pr.exceptions.NoIssuesException;
-import uoc.ds.pr.exceptions.NoWorkerException;
 import uoc.ds.pr.exceptions.WorkerNotFoundException;
 import uoc.ds.pr.model.Issue;
-import uoc.ds.pr.model.IssueType;
 import uoc.ds.pr.model.Worker;
 import uoc.ds.pr.repository.IssueRepository;
 import uoc.ds.pr.repository.WorkerRepository;
@@ -43,26 +41,5 @@ public class IssueService {
             throws NoIssuesException {
 
         return workerRepository.doneIssues(workerId);
-    }
-
-    public Worker getTopWorker() throws NoWorkerException {
-        Worker worker = workerRepository.getTopWorker();
-
-        if (worker == null) {
-            throw new NoWorkerException();
-        }
-
-        return worker;
-    }
-
-    private boolean canWorkerSolveIssue(Worker worker, Issue issue) {
-        IssueType workerIssueType = worker.getIssueType();
-        IssueType issueType = issue.getIssueType();
-
-        if (workerIssueType == null || issueType == null) {
-            return false;
-        }
-
-        return workerIssueType.getId().equals(issueType.getId());
     }
 }

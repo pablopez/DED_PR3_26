@@ -1,15 +1,16 @@
-package uoc.ds.pr.repository;
+package uoc.ds.pr.storage;
 
-import edu.uoc.ds.adt.nonlinear.HashTable;
+import edu.uoc.ds.adt.nonlinear.DictionaryAVLImpl;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.model.AbstractModel;
 
-public class HashStorageStrategy<T extends AbstractModel> implements StorageStrategy<T> {
+public class AVLStorageStrategy<T extends AbstractModel>
+        implements StorageStrategy<T> {
 
-    private final HashTable<String,T> data;
+    private final DictionaryAVLImpl<String, T> data;
 
-    public HashStorageStrategy() {
-        this.data = new HashTable<String,T>();
+    public AVLStorageStrategy() {
+        this.data = new DictionaryAVLImpl<>();
     }
 
     @Override

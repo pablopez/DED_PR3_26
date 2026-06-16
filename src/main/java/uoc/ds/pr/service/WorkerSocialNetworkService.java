@@ -4,7 +4,6 @@ import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.exceptions.*;
 import uoc.ds.pr.model.IssueType;
 import uoc.ds.pr.model.Worker;
-import uoc.ds.pr.repository.IssueRepository;
 import uoc.ds.pr.repository.IssueTypeRepository;
 import uoc.ds.pr.repository.WorkerRepository;
 import uoc.ds.pr.repository.WorkerSocialNetworkRepository;

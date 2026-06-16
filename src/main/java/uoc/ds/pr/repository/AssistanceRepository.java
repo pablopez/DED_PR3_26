@@ -7,6 +7,7 @@ import uoc.ds.pr.model.IssueType;
 import uoc.ds.pr.model.Room;
 import uoc.ds.pr.model.User;
 import uoc.ds.pr.model.Worker;
+import uoc.ds.pr.storage.AVLStorageStrategy;
 
 import java.time.LocalDate;
 
@@ -37,12 +38,12 @@ public class AssistanceRepository extends AbstractRepository<Assistance> {
             );
 
             save(assistance);
-        }else{
-            /*
+        }/*else{
+
                habría que devolver un error en caso de que se intentara duplicar una asistencia? o editarla?
                dejo este bloque pendiente para ver qué hacer y devolviendo la asistencia tal cual
-            */
-        }
+
+        }*/
         return assistance;
     }
 

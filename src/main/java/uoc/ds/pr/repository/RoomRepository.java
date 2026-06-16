@@ -2,6 +2,7 @@ package uoc.ds.pr.repository;
 
 import uoc.ds.pr.exceptions.RoomNotFoundException;
 import uoc.ds.pr.model.Room;
+import uoc.ds.pr.storage.VectorStorageStrategy;
 
 import static uoc.ds.pr.pr3.SystemIssuesPR3.MAX_ROOMS;
 

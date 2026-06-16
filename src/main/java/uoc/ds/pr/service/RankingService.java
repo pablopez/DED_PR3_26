@@ -1,7 +1,6 @@
 package uoc.ds.pr.service;
 
 import edu.uoc.ds.traversal.Iterator;
-import uoc.ds.pr.exceptions.NoRatedWorkerException;
 import uoc.ds.pr.exceptions.NoSystemsException;
 import uoc.ds.pr.exceptions.NoUserException;
 import uoc.ds.pr.exceptions.NoWorkerException;
@@ -26,6 +25,16 @@ public class RankingService {
         this.workerRepository = workerRepository;
         this.userRepository = userRepository;
         this.systemRepository = systemRepository;
+    }
+
+    public Worker getTopWorker() throws NoWorkerException {
+        Worker worker = workerRepository.getTopWorker();
+
+        if (worker == null) {
+            throw new NoWorkerException();
+        }
+
+        return worker;
     }
 
     public Iterator<Worker> getTop10BestWorkers()

@@ -3,11 +3,11 @@ package uoc.ds.pr.repository;
 import edu.uoc.ds.traversal.Iterator;
 import uoc.ds.pr.exceptions.ComponentAlreadyInstalledException;
 import uoc.ds.pr.exceptions.NoSystemsException;
-import uoc.ds.pr.exceptions.SystemHasNoComponentsException;
 import uoc.ds.pr.exceptions.SystemNotFoundException;
 import uoc.ds.pr.model.Component;
 import uoc.ds.pr.model.User;
 import uoc.ds.pr.model.System;
+import uoc.ds.pr.storage.AVLStorageStrategy;
 
 public class SystemRepository
         extends AbstractRepository<uoc.ds.pr.model.System> {
@@ -93,12 +93,6 @@ public class SystemRepository
                 > systemWithMostComponents.numComponents()) {
             systemWithMostComponents = system;
         }
-    }
-
-    public Iterator<Component> getComponentsBySystem(String systemId) throws SystemHasNoComponentsException{
-        System system = getSystem(systemId);
-        if(system.numComponents() == 0) throw new SystemHasNoComponentsException();
-        return system.components();
     }
 
     public System getSystemWithMostComponents() throws NoSystemsException {

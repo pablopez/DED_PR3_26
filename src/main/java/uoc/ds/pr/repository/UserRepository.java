@@ -6,6 +6,7 @@ import uoc.ds.pr.exceptions.NoUserException;
 import uoc.ds.pr.exceptions.UserNotFoundException;
 import uoc.ds.pr.model.Assistance;
 import uoc.ds.pr.model.User;
+import uoc.ds.pr.storage.HashStorageStrategy;
 import uoc.ds.pr.util.OrderedVector;
 
 import java.util.Comparator;
@@ -31,7 +32,7 @@ public class UserRepository extends AbstractRepository<User> {
         return addElement(
                 id,
                 key -> new User(key, name, role, phone),
-                (user, data) -> user.update(name, role, phone),
+                (user, _) -> user.update(name, role, phone),
                 name,
                 role.name(),
                 phone

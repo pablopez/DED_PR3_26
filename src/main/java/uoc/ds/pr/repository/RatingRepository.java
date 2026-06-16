@@ -1,8 +1,6 @@
 package uoc.ds.pr.repository;
-
-import uoc.ds.pr.exceptions.RatingNotFoundException;
-import uoc.ds.pr.model.Assistance;
 import uoc.ds.pr.model.Rating;
+import uoc.ds.pr.storage.VectorStorageStrategy;
 
 import java.time.LocalDate;
 
@@ -44,18 +42,5 @@ public class RatingRepository extends AbstractRepository<Rating> {
            );
         }
         return rating;
-    }
-
-    public Rating getRating(String id) {
-        return getById(id);
-    }
-
-    public Rating getRatingOrThrow(String id)
-            throws RatingNotFoundException {
-        return getByIdOrThrow(id, RatingNotFoundException::new);
-    }
-
-    public int numRatings() {
-        return size();
     }
 }
