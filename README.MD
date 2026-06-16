@@ -89,7 +89,7 @@ Representa las entidades del dominio. Todas sus clases heredan de `AbstractModel
 ### 2.5 Excepciones Personalizadas (`src/main/java/uoc/ds/pr/exceptions/`)
 Todas las excepciones del sistema extienden de `DSException`. Cada excepción se autodefinen por su nombre. 
 
-### 2.5 Restricciones arquitectónicas
+### 2.5 Restricciones arquitectónicas 
 No está permitido usar `java.util` para:
 - ArrayList, LinkedList, Vector
 - HashMap, Hashtable, HashSet
@@ -97,6 +97,7 @@ No está permitido usar `java.util` para:
 - Stack, Dictionary, Collections
 
 Se debe de usar exclusivamente estructuras de DSLib(`DSLib-2.1-7.jar`)
+
 ---
 
 ## 🧬 3. Estructuras de Datos y Justificación
