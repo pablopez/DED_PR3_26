@@ -1,7 +1,5 @@
 #  System Issues Manager - PR3 - DED
 
-Sistema avanzado de gestión de infraestructuras IT, incidencias, asistencias técnicas y red social corporativa. Desarrollado como práctica de Estructuras de Datos (DED) para la **Universitat Oberta de Catalunya (UOC)**.
-
 ## 👨‍💻 Autor
 - **Nombre:** Pablo López Jiménez
 - **Email:** plopezjim@uoc.edu
