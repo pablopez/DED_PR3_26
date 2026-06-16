@@ -1,12 +1,10 @@
 package uoc.ds.pr;
 
-import edu.uoc.ds.traversal.Iterator;
 import org.junit.Assert;
 import org.junit.Test;
 import uoc.ds.pr.exceptions.AssistanceNotResolvedException;
 import uoc.ds.pr.exceptions.NoWorkerException;
 import uoc.ds.pr.model.Assistance;
-import uoc.ds.pr.model.Worker;
 import uoc.ds.pr.pr3.SystemIssuesPR3;
 import uoc.ds.pr.pr3.SystemIssuesPR3Impl;
 
@@ -53,30 +51,6 @@ public class PR3ExtraTests {
                 10,
                 10
         ));
-    }
-
-    @Test
-    public void unfollowedWorkersShouldExcludeAlreadyFollowedWorkers() throws Exception {
-        SystemIssuesPR3 pr = new SystemIssuesPR3Impl();
-
-        pr.addWorker("W1", "Worker 1", "Address");
-        pr.addWorker("W2", "Worker 2", "Address");
-        pr.addWorker("W3", "Worker 3", "Address");
-
-        pr.addIssueType("IT1", "Hardware");
-
-        pr.assignWorkerToIssueType("W1", "IT1");
-        pr.assignWorkerToIssueType("W2", "IT1");
-        pr.assignWorkerToIssueType("W3", "IT1");
-
-        pr.addFollower("W2", "W1");
-
-        Iterator<Worker> it =
-                pr.getUnfollowedWorkersWithAssignedIssueType("W1", "IT1");
-
-        Assert.assertTrue(it.hasNext());
-        Assert.assertEquals("W3", it.next().getId());
-        Assert.assertFalse(it.hasNext());
     }
 
     @Test

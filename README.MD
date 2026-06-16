@@ -134,12 +134,12 @@ La asignación utiliza la estructura `RoundRobinList` para el reparto equitativo
 
 ## 🧪 6. Testing
 
-En esta sección se han omitido de las clases de pruebas proporcionadas para evitar ser redundante. Pongo el foco en la colección de test que he añadido en `src/test/java/uoc/ds/pr/ExtraTestsPR3.java`:
-- `pr3ShouldShareStateWithInheritedPR2Methods()`: Compara los helpers de la PR2 y de la PR3 para garantizar que se ha implementado correctamente la gestión de datos, sin duplicar la implementación de repositorios. 
+En esta sección se han omitido de las clases de pruebas proporcionadas para evitar ser redundante. A continuación pongo el foco en la colección de test que he añadido en `src/test/java/uoc/ds/pr/PR3ExtraTests.java`:
+- `pr3ShouldShareStateWithInheritedPR2Methods()`: Desde un punto de vista arquitectónico, al embeber la PR2 en la PR3, existe riesgo de instanciar repositorios por duplicado. Este test comprueba que se inyectan correctamente los repositorios en los servicios manteniendo su estado en todo momento.
 - `reassignWorkerToAnotherIssueTypeMustMoveWorker()`: Prueba que al reasignar un trabajador a un nuevo tipo de incidencia, se actualizan correctamente los contadores y las listas en ambas estructuras.
-- `getTop10BestWorkersWithoutRatedWorkersShouldThrow()`: Asegura que se lance NoWorkerException al solicitar los rankings si todavía no se ha valorado a ningún trabajador.
-- `rateUnknownAssistanceShouldThrowAssistanceNotResolved()`: Asegura que se lance AssistanceNotResolvedException al intentar puntuar una asistencia desconocida o no resuelta.
-- `solveAssistanceMustRespectPriority()`: Prueba que la cola de prioridad aplicada ordene siguiendo el criterio esperado  (Rol de usuario -> Fecha -> ID).
+- `getTop10BestWorkersWithoutRatedWorkersShouldThrow()`: Asegura que se lance NoWorkerException al solicitar los rankings si todavía no se ha valorado a ningún trabajador evitando los clásicos `NullPointerException` o `IndexOutOfBoundsException`
+- `rateUnknownAssistanceShouldThrowAssistanceNotResolved()`: Asegura que se lance `AssistanceNotResolvedException` al intentar puntuar una asistencia desconocida o no resuelta.
+- `solveAssistanceMustRespectPriority()`: Crea colisiones artificiales para verificar que la comparación sigue la prioridad esperada (Rol de usuario -> Fecha -> ID).
 ---
 
 ## 💻 7. Tecnologías y Dependencias
