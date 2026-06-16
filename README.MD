@@ -98,7 +98,7 @@ No está permitido usar `java.util` para:
 Se debe de usar exclusivamente estructuras de DSLib(`DSLib-2.1-7.jar`)
 ---
 
-## 🧬 5. Estructuras de Datos y Justificación
+## 🧬 3. Estructuras de Datos y Justificación
 
 | Entidad / Relación | Estructura Utilizada | Justificación de Diseño                                                                                     |
 |-------------------|----------------------|-------------------------------------------------------------------------------------------------------------|
@@ -114,25 +114,25 @@ Se debe de usar exclusivamente estructuras de DSLib(`DSLib-2.1-7.jar`)
 
 
 ---
-## 🛠️ 5. Deuda Técnica (Auditoría PEC2)
+## 🛠️ 4. Deuda Técnica (Auditoría PEC2)
 
 El código actual asume el enunciado original. No obstante quiero dejar nota de que, basándonos en la auditoría del sistema comentada en la solución oficial de la PEC2, constan las siguientes deudas técnicas para futuras fases:
 
-### 5.1. Optimización de consultas profundas (Partes de trabajo por Usuario)
+### 4.1. Optimización de consultas profundas (Partes de trabajo por Usuario)
 Actualmente, obtener los partes de trabajo de un usuario requiere recorrer múltiples niveles de la estructura: **$Usuario \rightarrow Sistemas \rightarrow Componentes \rightarrow Partes$**. Esto genera una complejidad temporal costosa de **$O(log S + SU \cdot SC \cdot CP)$**.
 * **Solución propuesta:** Añadir una estructura adicional (lista enlazada) directamente en el modelo `User` que almacene referencias a sus partes de trabajo. Esto penalizaría ligeramente la escritura pero reduciría la lectura a una complejidad proporcional al número de partes.
 
-### 5.2. Escalabilidad de las Valoraciones (Ratings)
+### 4.2. Escalabilidad de las Valoraciones (Ratings)
 El diseño original propuso que el volumen de valoraciones sería estático. Dado que el número de asistencias crece de forma lineal y cada asistencia puede ser valorada se debe de refactorizar el código para que se trate la estructura de datos que almacena Valoraciones como una estructura con crecimiento lineal. 
 * **Solución propuesta:** Refactorizar el `RatingRepository` para sustituir el vector secuencial por un Árbol AVL (`DictionaryAVLImpl`), garantizando operaciones en **$O(log N)$** frente a grandes volúmenes.
 
-### 5.3. Saturación de Trabajadores por Tipo de Incidencia
+### 4.3. Saturación de Trabajadores por Tipo de Incidencia
 La asignación utiliza la estructura `RoundRobinList` para el reparto equitativo. Si un tipo de incidencia es muy común, la cantidad de trabajadores capacitados puede tener un crecimiento mayor del esperado comprometiendo el rendimiento en operaciones de búsqueda .
 * **Solución propuesta:** implementar un TAD basado en otro tipo de estructuras preparadas para manejar grandes cantidades, como por ejemplo una tabla de dispersión.
 
 ---
 
-## 🧪 6. Testing
+## 🧪 5. Testing
 
 En esta sección se han omitido de las clases de pruebas proporcionadas para evitar ser redundante. A continuación pongo el foco en la colección de test que he añadido en `src/test/java/uoc/ds/pr/PR3ExtraTests.java`:
 - `pr3ShouldShareStateWithInheritedPR2Methods()`: Desde un punto de vista arquitectónico, al embeber la PR2 en la PR3, existe riesgo de instanciar repositorios por duplicado. Este test comprueba que se inyectan correctamente los repositorios en los servicios manteniendo su estado en todo momento.
@@ -142,7 +142,7 @@ En esta sección se han omitido de las clases de pruebas proporcionadas para evi
 - `solveAssistanceMustRespectPriority()`: Crea colisiones artificiales para verificar que la comparación sigue la prioridad esperada (Rol de usuario -> Fecha -> ID).
 ---
 
-## 💻 7. Tecnologías y Dependencias
+## 💻 6. Tecnologías y Dependencias
 
 * **Lenguaje:** Java 23
 * **Gestor de dependencias:** Maven
