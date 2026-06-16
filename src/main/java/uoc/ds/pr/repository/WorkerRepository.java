@@ -116,7 +116,7 @@ public class WorkerRepository extends AbstractRepository<Worker> {
     }
 
     public Iterator<Worker> getTopNWorkers() throws NoWorkerException {
-        if(size() == 0) throw new NoWorkerException();
+        if(this.numRatedWorkers() == 0) throw new NoWorkerException();
         return topWorkers.values();
     }
 }

@@ -341,8 +341,8 @@ public class SystemIssuesPR3Test extends SystemIssuesPR2Test {
         systemIssues.rateAssistance("R1", "U24", "ASS02", DateUtils.createLocalDate("14-05-2026"), 9, 8,9);
         systemIssues.rateAssistance("R2", "U58", "ASS10", DateUtils.createLocalDate("12-05-2026"), 8, 8,8);
         systemIssues.rateAssistance("R3", "U41", "ASS14", DateUtils.createLocalDate("12-05-2026"), 8, 8,8);
-        systemIssues.rateAssistance("R3", "U52", "ASS06", DateUtils.createLocalDate("12-05-2026"), 8, 8,8);
-        systemIssues.rateAssistance("R3", "U9", "ASS01", DateUtils.createLocalDate("12-05-2026"), 3, 3,3);
+        systemIssues.rateAssistance("R4", "U52", "ASS06", DateUtils.createLocalDate("12-05-2026"), 8, 8,8);
+        systemIssues.rateAssistance("R5", "U9", "ASS01", DateUtils.createLocalDate("12-05-2026"), 3, 3,3);
 
         Assert.assertThrows(AssistanceNotResolvedException.class, () ->
                 systemIssues.rateAssistance("R1", "U24", "ASS03", DateUtils.createLocalDate("14-05-2026"), 9, 8,9));
@@ -359,13 +359,56 @@ public class SystemIssuesPR3Test extends SystemIssuesPR2Test {
 
         Assert.assertTrue(it.hasNext());
         Worker worker = it.next();
-        Assert.assertEquals(8.22, worker.getGlobalRating(),0.1);
+        Assert.assertEquals(8.16, worker.getGlobalRating(),0.01);
         Assert.assertEquals("W10", worker.getId());
+
+        Iterator<Rating> ratingsW10 = worker.ratings();
+        Assert.assertTrue(ratingsW10.hasNext());
+        Rating r = ratingsW10.next();
+
+        Assert.assertEquals("ASS02", r.getAssistanceId());
+        double ratingAss2 = r.getAverageScore();
+        Assert.assertEquals(8.66, ratingAss2, 0.1);
+
+        Assert.assertTrue(ratingsW10.hasNext());
+        r = ratingsW10.next();
+
+        Assert.assertEquals("ASS10", r.getAssistanceId());
+        double ratingAss10 = r.getAverageScore();
+        Assert.assertEquals(8.0, ratingAss10, 0.1);
+
+        Assert.assertTrue(ratingsW10.hasNext());
+        r = ratingsW10.next();
+
+        Assert.assertEquals("ASS14", r.getAssistanceId());
+        double ratingAss14 = r.getAverageScore();
+        Assert.assertEquals(8.0, ratingAss14, 0.1);
+
+        Assert.assertTrue(ratingsW10.hasNext());
+        r = ratingsW10.next();
+        double ratingAss6 = r.getAverageScore();
+        Assert.assertEquals("ASS06", r.getAssistanceId());
+        Assert.assertEquals(8.0, ratingAss6, 0.1);
+        Assert.assertFalse(ratingsW10.hasNext());
+
+        double globalRating = (ratingAss2 + ratingAss10 + ratingAss14 + ratingAss6 ) / 4;
+
+        Assert.assertEquals(8.16, worker.getGlobalRating(),0.01);
+        Assert.assertEquals(globalRating, worker.getGlobalRating(), 0.1);
+
 
         Assert.assertTrue(it.hasNext());
         worker = it.next();
         Assert.assertEquals(3, worker.getGlobalRating(),0.1);
         Assert.assertEquals("W8", worker.getId());
+
+        Iterator<Rating> ratingsW08 = worker.ratings();
+        Assert.assertTrue(ratingsW08.hasNext());
+        r = ratingsW08.next();
+        Assert.assertEquals("ASS01", r.getAssistanceId());
+        Assert.assertEquals(3.0, r.getAverageScore(), 0.1);
+        Assert.assertFalse(ratingsW08.hasNext());
+
 
         Assert.assertFalse(it.hasNext());
     }

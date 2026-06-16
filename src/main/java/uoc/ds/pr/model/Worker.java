@@ -117,7 +117,7 @@ public class Worker extends AbstractModel {
 
     public void addRate(Rating rating) {
         rates.put(rating.getId(), rating);
-        ratingsSum += rating.getAverage();
+        ratingsSum += rating.getAverageScore();
     }
 
     public double getGlobalRating() {
@@ -135,4 +135,7 @@ public class Worker extends AbstractModel {
         return rates.size() > 0;
     }
 
+    public Iterator<Rating> ratings(){
+        return rates.values();
+    }
 }

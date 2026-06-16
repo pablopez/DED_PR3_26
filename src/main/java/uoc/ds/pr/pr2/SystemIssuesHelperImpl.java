@@ -3,78 +3,79 @@ package uoc.ds.pr.pr2;
 import uoc.ds.pr.model.Component;
 import uoc.ds.pr.model.System;
 import uoc.ds.pr.model.Worker;
+import uoc.ds.pr.repository.Repositories;
 
 public class SystemIssuesHelperImpl implements SystemIssuesHelper {
-    private final SystemIssuesPR2Impl systemIssues;
+    private final Repositories repositories;
 
-    public SystemIssuesHelperImpl(SystemIssuesPR2Impl computerProjects) {
-        this.systemIssues = computerProjects;
+    public SystemIssuesHelperImpl(Repositories repositories) {
+        this.repositories = repositories;
     }
-
 
     @Override
     public Worker getWorker(String id) {
-        return systemIssues.workerRepository.getWorker(id);
+        return repositories.workers().getWorker(id);
     }
 
     @Override
     public int numWorkers() {
-        return systemIssues.workerRepository.numWorkers();
+        return repositories.workers().numWorkers();
     }
 
     @Override
     public System getSystem(String id) {
-        return systemIssues.systemRepository.getSystem(id);
+        return repositories.systems().getSystem(id);
     }
 
     @Override
     public int numSystems() {
-        return systemIssues.systemRepository.numSystems();
+        return repositories.systems().numSystems();
     }
 
     @Override
     public Component getComponent(String id) {
-        return systemIssues.componentRepository.getComponent(id);
+        return repositories.components().getComponent(id);
     }
 
     @Override
     public int numComponents() {
-        return systemIssues.componentRepository.numComponents();
+        return repositories.components().numComponents();
     }
 
     @Override
     public int numComponentsBySystem(String systemId) {
 
-        System system =  systemIssues.systemRepository.getSystem(systemId);
+        System system =  repositories.systems().getSystem(systemId);
         return system.numComponents();
     }
 
     @Override
     public int numIssues() {
-        return systemIssues.issueRepository.numIssues();
+        return repositories.issues().numIssues();
     }
 
     @Override
     public int numIssuesByComponent(String componentId) {
-        Component component =  systemIssues.componentRepository.getComponent(componentId);
+        Component component =
+                repositories.components().getComponent(componentId);
         return component.getIssuesCont();
     }
 
     @Override
     public int numIssuesByWorker(String workerId) {
-        Worker worker =  systemIssues.workerRepository.getWorker(workerId);
+        Worker worker = repositories.workers().getWorker(workerId);
         return worker.numPendingIssues();
     }
 
     @Override
     public int numSolvedAssistances(String workerId) {
-        Worker worker = systemIssues.workerRepository.getWorker(workerId);
+        Worker worker = repositories.workers().getWorker(workerId);
         return worker.numSolvedAssistances();
     }
 
     @Override
     public int numAssignedAssistances(String workerId) {
-        Worker worker = systemIssues.workerRepository.getWorker(workerId);
+        Worker worker = repositories.workers().getWorker(workerId);
         return worker.numAssignedAssistances();
     }
 

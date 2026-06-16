@@ -16,7 +16,7 @@ public class RatingRepository extends AbstractRepository<Rating> {
 
     public Rating addRating(
             String id,
-            Assistance assistance,
+            String assistanceId,
             LocalDate date,
             int resolutionScore,
             int speedScore,
@@ -27,7 +27,7 @@ public class RatingRepository extends AbstractRepository<Rating> {
         if (rating == null) {
             rating = new Rating(
                     id,
-                    assistance,
+                    assistanceId,
                     date,
                     resolutionScore,
                     speedScore,
@@ -36,7 +36,7 @@ public class RatingRepository extends AbstractRepository<Rating> {
 
             save(rating);
         } else {
-           rating.update(assistance,
+           rating.update(assistanceId,
                    date,
                    resolutionScore,
                    speedScore,

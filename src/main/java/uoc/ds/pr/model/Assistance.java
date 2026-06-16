@@ -90,10 +90,7 @@ public class Assistance extends AbstractModel {
     }
 
     public static final Comparator<Assistance> PriorityCMP = Comparator
-            // 1. Mayor rango sale antes (reversed porque por defecto es ascendente)
             .comparingInt((Assistance a) -> a.getUser().getRole().getRank()).reversed()
-            // 2. Si empatan, ordenamos por fecha más antigua (ascendente)
             .thenComparing(Assistance::getDate)
-            // 3. Si empatan en fecha, ordenamos por ID (ascendente)
             .thenComparing(Assistance::getId);
 }

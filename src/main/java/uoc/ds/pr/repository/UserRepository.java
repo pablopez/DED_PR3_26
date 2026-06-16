@@ -6,7 +6,6 @@ import uoc.ds.pr.exceptions.NoUserException;
 import uoc.ds.pr.exceptions.UserNotFoundException;
 import uoc.ds.pr.model.Assistance;
 import uoc.ds.pr.model.User;
-import uoc.ds.pr.model.Worker;
 import uoc.ds.pr.util.OrderedVector;
 
 import java.util.Comparator;

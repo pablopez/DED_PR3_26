@@ -4,59 +4,50 @@ import uoc.ds.pr.model.*;
 import uoc.ds.pr.repository.*;
 
 public class SystemIssuesHelperPR3Impl implements SystemIssuesHelperPR3 {
-    private final RoomRepository roomRepository;
-    private final UserRepository userRepository;
-    private final AssistanceRepository assistanceRepository;
-    private final IssueTypeRepository issueTypeRepository;
-    private final WorkerRepository workerRepository;
-    private final WorkerSocialNetworkRepository workerSocialNetworkRepository;
-    public SystemIssuesHelperPR3Impl(SystemIssuesPR3Impl systemIssues) {
-        this.roomRepository = systemIssues.getRoomRepository();
-        this.userRepository = systemIssues.getUserRepository();
-        this.assistanceRepository = systemIssues.getAssistanceRepository();
-        this.issueTypeRepository = systemIssues.getIssueTypeRepository();
-        this.workerRepository = systemIssues.getWorkerRepository();
-        this.workerSocialNetworkRepository = systemIssues.getWorkerSocialNetworkRepository();
+    private final Repositories repositories;
+
+    public SystemIssuesHelperPR3Impl(Repositories repositories) {
+        this.repositories = repositories;
     }
 
     @Override
     public int numRooms() {
-        return roomRepository.numRooms();
+        return repositories.rooms().numRooms();
     }
 
     @Override
     public Room getRoom(String id) {
-        return roomRepository.getRoom(id);
+        return repositories.rooms().getRoom(id);
     }
 
     @Override
     public int numUsers() {
-        return userRepository.numUsers();
+        return repositories.users().numUsers();
     }
 
     @Override
     public User getUser(String id) {
-        return userRepository.getUser(id);
+        return repositories.users().getUser(id);
     }
 
     @Override
     public int numIssueTypes() {
-        return issueTypeRepository.numIssueTypes();
+        return repositories.issueTypes().numIssueTypes();
     }
 
     @Override
     public IssueType getIssueType(String id) {
-        return issueTypeRepository.getIssueType(id);
+        return repositories.issueTypes().getIssueType(id);
     }
 
     @Override
     public int numAssistances() {
-        return assistanceRepository.numAssistances();
+        return repositories.assistances().numAssistances();
     }
 
     @Override
     public int numAssistancesByUser(String id) {
-        User user = userRepository.getUser(id);
+        User user = repositories.users().getUser(id);
         if (user == null) {
             return 0;
         }
@@ -65,7 +56,7 @@ public class SystemIssuesHelperPR3Impl implements SystemIssuesHelperPR3 {
 
     @Override
     public int numWorkerByIssueType(String issueTypeId) {
-        IssueType issueType = issueTypeRepository.getIssueType(issueTypeId);
+        IssueType issueType = repositories.issueTypes().getIssueType(issueTypeId);
         if (issueType == null) {
             return 0;
         }
@@ -74,28 +65,28 @@ public class SystemIssuesHelperPR3Impl implements SystemIssuesHelperPR3 {
 
     @Override
     public Assistance getAssistance(String assistanceId) {
-        return assistanceRepository.getAssistance(assistanceId);
+        return repositories.assistances().getAssistance(assistanceId);
     }
 
     @Override
     public int numFollowers(String userId) {
-        Worker worker = workerRepository.getWorker(userId);
+        Worker worker = repositories.workers().getWorker(userId);
 
         if (worker == null) {
             return 0;
         }
 
-        return workerSocialNetworkRepository.numFollowers(worker);
+        return repositories.socialNetwork().numFollowers(worker);
     }
 
     @Override
     public int numFollowings(String userId) {
-        Worker worker = workerRepository.getWorker(userId);
+        Worker worker = repositories.workers().getWorker(userId);
 
         if (worker == null) {
             return 0;
         }
 
-        return workerSocialNetworkRepository.numFollowings(worker);
+        return repositories.socialNetwork().numFollowings(worker);
     }
 }

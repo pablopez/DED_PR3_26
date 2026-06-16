@@ -49,25 +49,30 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.3.0</version>
+                <groupId>net.nicoulaj.maven.plugins</groupId>
+                <artifactId>checksum-maven-plugin</artifactId>
+                <version>1.11</version>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
                         <goals>
-                            <goal>exec</goal>
+                            <goal>files</goal>
                         </goals>
-                        <configuration>
-                            <!--skip>true</skip-->
-                            <executable>sha256sum</executable>
-                            <arguments>
-                                <argument>-c</argument>
-                                <argument>${project.basedir}/checksums.txt</argument>
-                            </arguments>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <algorithms>
+                        <algorithm>SHA-256</algorithm>
+                    </algorithms>
+                    <fileSets>
+                        <fileSet>
+                            <directory>${project.basedir}</directory>
+
+                            <includes>
+                                <include>checksums.txt</include>
+                            </includes>
+                        </fileSet>
+                    </fileSets>
+                </configuration>
             </plugin>
         </plugins>
 

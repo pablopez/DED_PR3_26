@@ -25,9 +25,6 @@ public class WorkerSocialNetworkRepository {
     }
 
     public void addFollower(Worker followed, Worker follower) {
-        addWorker(followed);
-        addWorker(follower);
-
         Vertex<Worker> followedVertex = graph.getVertex(followed);
         Vertex<Worker> followerVertex = graph.getVertex(follower);
 
@@ -36,7 +33,7 @@ public class WorkerSocialNetworkRepository {
         }
     }
 
-    public boolean isFollower(Worker possibleFollower, Worker followed) {
+    public boolean isFollowing(Worker possibleFollower, Worker followed) {
         Vertex<Worker> followerVertex = graph.getVertex(possibleFollower);
         Vertex<Worker> followedVertex = graph.getVertex(followed);
 
@@ -108,7 +105,7 @@ public class WorkerSocialNetworkRepository {
                 Worker candidate = secondLevelFollowers.next();
 
                 if (!candidate.getId().equals(worker.getId())
-                        && !isFollower(candidate, worker)
+                        && !isFollowing(candidate, worker)
                         && result.get(candidate.getId()) == null) {
                     result.put(candidate.getId(), candidate);
                 }
@@ -128,7 +125,7 @@ public class WorkerSocialNetworkRepository {
             Worker candidate = workersByIssueType.next();
 
             if (!candidate.getId().equals(worker.getId())
-                    && !isFollower(candidate, worker)
+                    && !isFollowing(candidate, worker)
                     && result.get(candidate.getId()) == null) {
                 result.put(candidate.getId(), candidate);
             }

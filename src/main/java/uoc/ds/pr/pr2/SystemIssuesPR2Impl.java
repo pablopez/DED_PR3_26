@@ -5,123 +5,86 @@ import uoc.ds.pr.exceptions.*;
 import uoc.ds.pr.model.*;
 import uoc.ds.pr.model.System;
 import uoc.ds.pr.repository.*;
+import uoc.ds.pr.service.Services;
 
 import java.time.LocalDateTime;
 
 
 public class SystemIssuesPR2Impl implements SystemIssues {
-    protected WorkerRepository workerRepository;
-    protected UserRepository userRepository;
-    protected SystemRepository systemRepository;
-    protected ComponentRepository componentRepository;
-    protected IssueRepository issueRepository;
-    protected IssueTypeRepository issueTypeRepository;
-    protected WorkerSocialNetworkRepository workerSocialNetworkRepository;
+    protected final Repositories repositories;
+    protected final Services services;
+    private final SystemIssuesHelper helper;
 
-    public SystemIssuesPR2Impl() {
-        workerRepository = new WorkerRepository();
-        systemRepository = new SystemRepository();
-        userRepository = new UserRepository();
-        componentRepository = new ComponentRepository();
-        issueRepository = new IssueRepository();
-        issueTypeRepository = new IssueTypeRepository();
-        workerSocialNetworkRepository = new WorkerSocialNetworkRepository();
+    protected SystemIssuesPR2Impl(Repositories repositories) {
+        this.repositories = repositories;
+        this.services = new Services(repositories);
+        this.helper = new SystemIssuesHelperImpl(repositories);
     }
-
-    public WorkerRepository getWorkerRepository() {
-        return workerRepository;
-    }
-
-    public SystemRepository getSystemRepository() {
-        return systemRepository;
-    }
-
-    public ComponentRepository getComponentRepository() {
-        return componentRepository;
-    }
-
-    public IssueRepository getIssueRepository() {
-        return issueRepository;
-    }
-
-    public IssueTypeRepository getIssueTypeRepository() {
-        return issueTypeRepository;
-    }
-
-
 
     @Override
     public void addWorker(String workerId, String name, String address) {
-        Worker w = workerRepository.addWorker(workerId, name, address);
-        workerSocialNetworkRepository.addWorker(w);
+        this.services.core().addWorker(workerId, name, address);
     }
 
     @Override
     public void addSystem(String systemId, String description, String location, String userId) throws UserNotFoundException {
-        User user = userRepository.getUserOrThrow(userId);
-        systemRepository.addSystem(systemId, description, location, user);
-
+        this.services.core().addSystem(systemId, description, location, userId);
     }
 
     @Override
     public void addComponent(String componentId, String trademark, String model, String serial) {
-        componentRepository.addComponent(componentId, trademark, model, serial);
+        this.services.core().addComponent(componentId, trademark, model, serial);
 
     }
 
     @Override
     public void installComponentToSystem(String componentId, String systemId) throws ComponentAlreadyInstalledException {
-        Component component = componentRepository.getComponent(componentId);
-        systemRepository.addComponent(systemId, component);
+        this.services.infra().installComponentToSystem(componentId, systemId);
     }
 
     @Override
     public Issue createIssue(String issueId, String componentId, String issueTypeId, String description, LocalDateTime dateTime) throws ComponentNotFoundException {
-        Component component = componentRepository.getComponentOrThrow(componentId);
-        IssueType issueType = issueTypeRepository.getIssueType(issueTypeId);
-        return issueRepository.addIssue(issueId, component, issueType, description, dateTime);
+        return this.services.core().addIssue(issueId, componentId, issueTypeId, description, dateTime);
     }
 
     @Override
     public void assignIssue(String issueId, String workerId) throws IssueNotFoundException,  WorkerNotFoundException,
         IssueAlreadyAssignedException, IssueAlreadyResolvedException {
-        Issue issue = issueRepository.getIssueOrThrow(issueId);
-        Worker worker = workerRepository.getWorkerOrThrow(workerId);
-        issueRepository.assignIssue(issue, worker);
+        this.services.issues().assignIssue(issueId, workerId);
     }
 
     @Override
     public Issue solveIssue(String workerId) throws WorkerNotFoundException, NoIssuesException {
-        return workerRepository.solveIssue(workerId);
+        return this.services.issues().solveIssue(workerId);
     }
 
     @Override
     public Iterator<System> getSystems() throws NoSystemsException {
-        return  systemRepository.getSystems();
+        return  this.services.infra().getSystems();
     }
 
     @Override
     public Iterator<Component> getComponentsBySystem(String systemId) throws SystemHasNoComponentsException {
-        return systemRepository.getComponentsBySystem(systemId);
+        return this.services.infra().getComponentsBySystem(systemId);
     }
 
     @Override
     public Iterator<Issue> getDoneIssuesByWorker(String workerId) throws NoIssuesException {
-       return workerRepository.doneIssues(workerId);
+       return this.services.issues().getDoneIssuesByWorker(workerId);
     }
 
     @Override
     public Worker getTopWorker() throws NoWorkerException {
-        return workerRepository.getTopWorker();
+        return this.services.issues().getTopWorker();
     }
 
     @Override
     public System  getSystemWithMostComponents() throws NoSystemsException {
-        return systemRepository.getSystemWithMostComponents();
+        return this.services.rankings().getSystemWithMostComponents();
     }
 
     @Override
     public SystemIssuesHelper getSystemIssuesHelper() {
-        return new SystemIssuesHelperImpl(this);
+        return this.helper;
     }
 }

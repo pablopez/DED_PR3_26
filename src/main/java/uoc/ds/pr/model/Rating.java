@@ -11,19 +11,19 @@ public class Rating extends AbstractModel {
     private int resolutionScore;
     private int speedScore;
     private int treatmentScore;
-    private Assistance assistance;
+    private String assistanceId;
 
-    public Rating(String id, Assistance assistance, LocalDate date, int resolutionScore, int speedScore, int treatmentScore) {
+    public Rating(String id, String assistanceId, LocalDate date, int resolutionScore, int speedScore, int treatmentScore) {
         super(id);
-        setAssistance(assistance);
+        setAssistanceId(assistanceId);
         setDate(date);
         setResolutionScore(resolutionScore);
         setSpeedScore(speedScore);
         setTreatmentScore(treatmentScore);
     }
 
-    public void update(Assistance assistance, LocalDate date, int resolutionScore, int speedScore, int treatmentScore) {
-        setAssistance(this.assistance);
+    public void update(String assistanceId, LocalDate date, int resolutionScore, int speedScore, int treatmentScore) {
+        setAssistanceId(assistanceId);
         setDate(date);
         setResolutionScore(resolutionScore);
         setSpeedScore(speedScore);
@@ -62,12 +62,12 @@ public class Rating extends AbstractModel {
         this.treatmentScore = validateScore(treatmentScore);
     }
 
-    public Assistance getAssistance() {
-        return assistance;
+    public String getAssistanceId() {
+        return assistanceId;
     }
 
-    public void setAssistance(Assistance assistance) {
-        this.assistance = assistance;
+    public void setAssistanceId(String assistance) {
+        this.assistanceId = assistance;
     }
 
     private int validateScore(int score) {
@@ -77,7 +77,8 @@ public class Rating extends AbstractModel {
         return score;
     }
 
-    public double getAverage() {
+    public double getAverageScore() {
         return (resolutionScore + speedScore + treatmentScore) / 3.0;
     }
+
 }

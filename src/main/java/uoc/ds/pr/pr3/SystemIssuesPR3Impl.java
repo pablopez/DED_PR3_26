@@ -11,168 +11,105 @@ import uoc.ds.pr.repository.*;
 import java.time.LocalDate;
 
 public class SystemIssuesPR3Impl extends SystemIssuesPR2Impl implements SystemIssuesPR3 {
-    protected RoomRepository roomRepository;
-    protected AssistanceRepository assistanceRepository;
-    protected RatingRepository ratingRepository;
+
+    SystemIssuesHelperPR3Impl helper;
+
+    public SystemIssuesPR3Impl(Repositories repositories) {
+        super(repositories);
+        helper = new SystemIssuesHelperPR3Impl(repositories);
+    }
 
     public SystemIssuesPR3Impl() {
-        super();
-        roomRepository = new RoomRepository();
-        assistanceRepository = new AssistanceRepository();
-        ratingRepository = new RatingRepository();
-    }
-
-    public RoomRepository getRoomRepository() {
-        return roomRepository;
-    }
-    
-    public UserRepository getUserRepository() {
-        return userRepository;
-    }
-    
-    public AssistanceRepository getAssistanceRepository() {
-        return assistanceRepository;
-    }
-    
-    public RatingRepository getRatingRepository() {
-        return ratingRepository;
-    }
-
-    public WorkerSocialNetworkRepository getWorkerSocialNetworkRepository(){
-        return workerSocialNetworkRepository;
+        this(new Repositories());
     }
     
     @Override
     public void addRoom(String roomId, String name) {
-        roomRepository.addRoom(roomId, name);
+        this.services.core().addRoom(roomId, name);
     }
 
     @Override
     public void addUser(String userId, String name, Role role, String phone) {
-        userRepository.addUser(userId, name, role, phone);
+        this.services.core().addUser(userId, name, role, phone);
     }
 
     @Override
     public void addIssueType(String issueTypeId, String name) {
-        issueTypeRepository.addIssueType(issueTypeId, name);
+        this.services.core().addIssueType(issueTypeId, name);
     }
 
     @Override
     public void assignSystemToRoom(String systemId, String roomId) throws RoomNotFoundException, SystemNotFoundException {
-        Room room = roomRepository.getRoomOrThrow(roomId);
-        System system = systemRepository.getSystemOrThrow(systemId);
-        system.setRoom(room);
+        this.services.infra().assignSystemToRoom(systemId, roomId);
     }
 
     @Override
     public void assignWorkerToIssueType(String workerId, String issueTypeId) throws IssueTypeNotFoundException, WorkerNotFoundException {
-        Worker worker = workerRepository.getWorkerOrThrow(workerId);
-        IssueType issueType = issueTypeRepository.getIssueTypeOrThrow(issueTypeId);
-        worker.setIssueType(issueType);
+        this.services.workerIssueTypes().assignWorkerToIssueType(workerId, issueTypeId);
     }
 
     @Override
     public void addAssistance(String assistanceId, String userId, String issueTypeId, String roomId, LocalDate date, String description) throws UserNotFoundException {
-        User user = userRepository.getUserOrThrow(userId);
-        IssueType issueType = issueTypeRepository.getIssueType(issueTypeId);
-        Room room = roomRepository.getRoom(roomId);
-        Assistance assistance = assistanceRepository.addAssistance(assistanceId, user, issueType, room, date, description);
-        userRepository.addAssistance(user, assistance);
+        this.services.assistances().addAssistance(assistanceId, userId, issueTypeId, roomId, date, description);
     }
 
     @Override
     public void assignAssistance(String assistanceId) throws AssistanceNotFoundException, NoWorkerException {
-        assistanceRepository.assignAssistance(assistanceId);
+        this.services.assistances().assignAssistance(assistanceId);
     }
 
     @Override
     public Assistance solveAssistance(String workerId) throws WorkerNotFoundException, NoAssistanceException {
-        return workerRepository.solveAssistance(workerId);
+        return this.services.assistances().solveAssistance(workerId);
     }
 
     @Override
     public void rateAssistance(String ratingId, String userId, String assistanceId, LocalDate date, int resolutionScore, int speedScore, int treatmentScore) throws AssistanceNotResolvedException, UserIsNotCreatorException {
-        Assistance assistance = assistanceRepository.getAssistance(assistanceId);
-        
-        if (!assistance.isResolved()) {
-            throw new AssistanceNotResolvedException();
-        }
-        
-        if (!assistance.getUser().getId().equals(userId)) {
-            throw new UserIsNotCreatorException();
-        }
-        Rating rating = ratingRepository.addRating(ratingId, assistance, date, resolutionScore, speedScore, treatmentScore);
-        assistance.setRating(rating);
-        Worker worker = assistance.getWorker();
-        workerRepository.rateWorker(worker, rating);
+        this.services.assistances().rateAssistance(ratingId, userId, assistanceId, date, resolutionScore, speedScore, treatmentScore);
     }
 
     @Override
     public Iterator<Worker> getWorkersByIssueType(String issueTypeId) throws NoWorkerException {
-        IssueType issueType = issueTypeRepository.getIssueType(issueTypeId);
-        return issueType.getWorkers();
+        return this.services.workerIssueTypes().getWorkersByIssueType(issueTypeId);
     }
 
     @Override
     public Iterator<Worker> getTop10BestWorkers() throws NoWorkerException {
-        return workerRepository.getTopNWorkers();
+        return this.services.rankings().getTop10BestWorkers();
     }
 
     @Override
     public Iterator<User> getTop5UsersWithMostAssistances() throws NoUserException {
-        return userRepository.getTopAssistedUsers();
+        return this.services.rankings().getTop5UsersWithMostAssistances();
     }
 
     @Override
     public SystemIssuesHelperPR3 getSystemIssuesHelperPR3() {
-        return new SystemIssuesHelperPR3Impl(this);
+        return this.helper;
     }
 
     @Override
     public void addFollower(String workerID, String followerId) throws FollowerNotFoundException, WorkerNotFoundException {
-        Worker worker = workerRepository.getWorkerOrThrow(workerID);
-        Worker follower = workerRepository.getWorker(followerId);
-
-        if (follower == null) {
-            throw new FollowerNotFoundException();
-        }
-
-        workerSocialNetworkRepository.addFollower(worker, follower);
+        this.services.socialNetwork().addFollower(workerID, followerId);
     }
 
     @Override
     public Iterator<Worker> getFollowers(String workerId) throws WorkerNotFoundException, NoFollowersException {
-        Worker worker = workerRepository.getWorkerOrThrow(workerId);
-
-        if (workerSocialNetworkRepository.numFollowers(worker) == 0) {
-            throw new NoFollowersException();
-        }
-
-        return workerSocialNetworkRepository.getFollowers(worker);
+       return this.services.socialNetwork().getFollowers(workerId);
     }
 
     @Override
     public Iterator<Worker> getFollowings(String followerId) throws WorkerNotFoundException, NoFollowedException {
-        Worker worker = workerRepository.getWorkerOrThrow(followerId);
-        return workerSocialNetworkRepository.getFollowingsOrThrow(worker);
+        return this.services.socialNetwork().getFollowings(followerId);
     }
 
     @Override
     public Iterator<Worker> recommendations(String followerId) throws WorkerNotFoundException, NoFollowedException {
-        Worker worker = workerRepository.getWorkerOrThrow(followerId);
-        return workerSocialNetworkRepository.getRecommendationsOrThrow(worker);
+        return this.services.socialNetwork().recommendations(followerId);
     }
 
     @Override
     public Iterator<Worker> getUnfollowedWorkersWithAssignedIssueType(String workerId, String issueTyoeID) throws WorkerNotFoundException, NoWorkerException {
-        Worker worker = workerRepository.getWorkerOrThrow(workerId);
-        IssueType issueType = issueTypeRepository.getIssueType(issueTyoeID);
-        Iterator<Worker> workersByIssueType = issueType.getWorkers();
-
-        return
-                workerSocialNetworkRepository.getUnfollowedWorkersWithAssignedIssueType(
-                        worker,
-                        workersByIssueType
-                );
+        return this.services.socialNetwork().getUnfollowedWorkersWithAssignedIssueType(workerId, issueTyoeID);
     }
 }

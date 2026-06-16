@@ -1,4 +1,4 @@
-## PR2
+## PR3
 
 ## Author
 - name: Pablo López
@@ -6,10 +6,19 @@
 
 # DED PR3 — SystemIssues
 
-Proyecto Java para la asignatura **Diseño de Estructuras de Datos**.  
-La práctica implementa el TAD `SystemIssues`, ampliando la funcionalidad de PR2 con salas, usuarios, tipos de incidencia, asistencias, valoraciones, rankings y una red social dirigida entre trabajadores.
+Esta práctica pretende implementar la solución oficial de la PEC2 de la asignatura.   
 
-El diseño se ha realizado siguiendo los criterios habituales del temario: elección explícita de TADs, separación entre modelo/repositorio/fachada, uso de la DSLib de la asignatura, análisis de complejidad y evitación de colecciones de `java.util` para almacenar datos del dominio.
+La práctica tiene como objetivo:
+- refactorizar el código de la solución oficial de la PR2 para que funcione con las nuevas modificaciones
+- implementa el TAD `SystemIssues`
+
+El diseño se ha realizado siguiendo los criterios del temario: 
+- elección explícita de TADs
+- separación entre modelo/repositorio/fachada
+- uso de la DSLib de la asignatura evitando de colecciones de `java.util` para almacenar datos del dominio.
+
+Además he decidido, añadir una capa de servicio entre el TAD y las implementaciones para evitar que los repositorios 
+trabajaran entre sí en el propio TAD.
 
 ---
 
@@ -47,6 +56,7 @@ uoc.ds.pr
 ├── pr2
 ├── pr3
 ├── repository
+├── service
 └── util
 ```
 
@@ -68,7 +78,7 @@ Assistance
 Rating
 ```
 
-Cada entidad persistible hereda de `AbstractModel`, que proporciona un identificador común mediante `getId()`.
+Cada entidad persistible hereda de `AbstractModel`, que proporciona la propiedad de tener un identificador común mediante `getId()`.
 
 ### `repository`
 
@@ -106,10 +116,9 @@ DSLinkedList
 StackLinkedList
 OrderedVector
 RoundRobinList
-AssignedAssistanceQueue
 ```
 
-Estas clases adaptan o complementan las estructuras de la DSLib de la asignatura.
+Estas clases complementan las estructuras de la DSLib de la asignatura.
 
 ### `pr2` y `pr3`
 
