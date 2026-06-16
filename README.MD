@@ -95,6 +95,7 @@ No está permitido usar `java.util` para:
 - HashMap, Hashtable, HashSet
 - TreeSet, PriorityQueue
 - Stack, Dictionary, Collections
+
 Se debe de usar exclusivamente estructuras de DSLib(`DSLib-2.1-7.jar`)
 ---
 
